@@ -1,0 +1,8 @@
+# Diese Datei bleibt ausschließlich auf dem Bauserver und gehört nicht in öffentliche Repositories.
+database:
+  jdbc-url: "jdbc:mariadb://127.0.0.1:2167/flunar_bauserver"
+  username: "fl-bauserver"
+  password: "CHANGE_ME"
+  pool-size: 4
+  connection-timeout-ms: 5000
+

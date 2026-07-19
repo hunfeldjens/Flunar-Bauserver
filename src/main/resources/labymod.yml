@@ -1,0 +1,54 @@
+# Die komplette Integration ist optional. Ohne LabyModServerAPI wird diese Datei ignoriert.
+enabled: true
+log-connections: false
+
+features:
+  # Erlaubt oder verbietet LabyMods eigene Schriftart für Spieler auf diesem Server.
+  fancy-font:
+    enabled: true
+    allowed: true
+
+  # Discord Rich Presence eines LabyMod-Spielers.
+  discord-rich-presence:
+    enabled: true
+    text: "Flunar Bauserver"
+    show-session-time: true
+
+  # Anzeige des Spielmodus für LabyMod-Freunde.
+  playing-game-mode:
+    enabled: true
+    # LabyMod ergänzt in der Freundesliste selbst "Spielt". Projekt-Namespace und
+    # Privat-UUID werden durch einen lesbaren Namen ersetzt.
+    text: "Flunar.de Bauserver {project}"
+    # Die Server API unterstützt hier ein Textsymbol, aber keine separate Bild-URL.
+    friend-notification-icon: "◆"
+
+  # Bild über der Spielerliste.
+  # Empfohlene Auflösung: 1280x256 Pixel; das Seitenverhältnis muss 5:1 sein.
+  # PNG und eine direkt sowie öffentlich erreichbare HTTPS-URL werden empfohlen.
+  tab-list-banner:
+    enabled: false
+    image-url: "https://example.com/flunar-tab-banner.png"
+
+  # Icon in der Minecraft-Serverliste.
+  # Empfohlene Auflösung: exakt 64x64 Pixel als PNG.
+  # Andere Bildgrößen skaliert das Plugin automatisch auf 64x64 Pixel.
+  # Die URL muss direkt und öffentlich über HTTP oder HTTPS erreichbar sein.
+  server-list-icon:
+    enabled: false
+    image-url: "https://example.com/flunar-server-icon.png"
+
+  # Addon-Namen können frei ergänzt werden. "voicechat" deaktiviert LabyMod VoiceChat.
+  disabled-addons:
+    enabled: false
+    names:
+      - "voicechat"
+
+  # Zusatzzeile unter dem Namensschild. Standardmäßig bewusst deaktiviert.
+  subtitle:
+    enabled: false
+    text: "{player}"
+    size: 0.8
+
+# Verfügbare Platzhalter in Texten: {player}, {world}, {project}
+# Zusätzlich werden installierte PlaceholderAPI-Platzhalter wie %luckperms_prefix% ersetzt.

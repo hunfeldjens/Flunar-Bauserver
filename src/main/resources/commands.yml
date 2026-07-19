@@ -1,0 +1,66 @@
+commands:
+  projekt: {aliases: [project, projekte], permission: bauserver.team}
+  privat: {permission: bauserver.privat}
+  unloadallworlds: {permission: bauserver.admin}
+  world: {aliases: [welt], permission: bauserver.team}
+  wldebug: {permission: bauserver.admin}
+  tpa: {permission: bauserver.tpa}
+  tpaccept: {permission: bauserver.tpa}
+  tpadeny: {permission: bauserver.tpa}
+  back: {permission: bauserver.builder}
+  bs: {aliases: [bauservermenu], permission: bauserver.access}
+  msg: {aliases: [tell, whisper, w], permission: bauserver.team}
+  r: {aliases: [reply], permission: bauserver.team}
+  tc: {aliases: [teamchat], permission: bauserver.builder}
+  fly: {permission: bauserver.team}
+  gamemode: {aliases: [gm], permission: bauserver.gamemode}
+  sun: {permission: bauserver.builder}
+  rain: {permission: bauserver.builder}
+  storm: {permission: bauserver.builder}
+  tag: {aliases: [day], permission: bauserver.builder}
+  nacht: {aliases: [night], permission: bauserver.builder}
+  speed: {permission: bauserver.builder}
+  size: {aliases: [scale], permission: bauserver.builder}
+  hideentity: {aliases: [he], permission: bauserver.builder}
+  showentity: {aliases: [se], permission: bauserver.builder}
+  tools: {aliases: [opitems], permission: bauserver.builder}
+  workbench: {aliases: [wb, craft], permission: bauserver.builder}
+  anvil: {permission: bauserver.builder}
+  enderchest: {aliases: [ec, echest], permission: bauserver.builder}
+  invsee: {permission: bauserver.team}
+  endersee: {aliases: [ecsee], permission: bauserver.team}
+  reasons: {permission: bauserver.team}
+  kick: {permission: bauserver.team}
+  ban: {permission: bauserver.team}
+  unban: {permission: bauserver.team}
+  banhistory: {aliases: [banhist], permission: bauserver.team}
+  kickhistory: {aliases: [kickhist], permission: bauserver.team}
+  broadcast: {aliases: [bro], permission: bauserver.admin}
+  cc: {permission: bauserver.team}
+  pcc: {permission: bauserver.team}
+  me: {aliases: [uinfo, info], permission: bauserver.team}
+  tps: {}
+  ping: {aliases: [ms], permission: bauserver.team}
+  vanish: {aliases: [v], permission: bauserver.admin}
+  serverrestart: {aliases: [restartbauserver, srestart], permission: bauserver.srbuilder}
+  help: {aliases: [hilfe], permission: bauserver.team}
+  feature: {aliases: [features], permission: bauserver.srbuilder}
+  featuredebug: {permission: bauserver.srbuilder}
+  onlinezeit: {aliases: [otime, ot, onlinetime], permission: bauserver.team}
+  backup: {permission: bauserver.builder}
+  prefix: {permission: bauserver.admin}
+  reset: {permission: bauserver.admin}
+  fix: {permission: bauserver.builder}
+  blockdisplay: {aliases: [bd, bdisplay], permission: bauserver.builder}
+
+permissions:
+  bauserver.access: {default: false}
+  bauserver.tpa: {default: false}
+  bauserver.privat: {default: false}
+  bauserver.team: {default: false}
+  bauserver.builder: {default: false}
+  bauserver.srbuilder: {default: false}
+  bauserver.admin: {default: op}
+  bauserver.gamemode: {default: false}
+  bauserver.admin.bypass: {default: op}
+  bauserver.ban.bypass: {default: op}

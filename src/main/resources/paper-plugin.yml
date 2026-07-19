@@ -1,0 +1,30 @@
+name: Flunar-Bauserver
+version: '${project.version}'
+main: eu.hunfeld.flunarBauserver.FlunarBauserver
+api-version: '26.1.2'
+description: Vollständiges Projekt-, Welt-, Team- und Bauserver-System
+authors: [Lehrling]
+website: https://www.hunfeld.eu
+
+dependencies:
+  server:
+    PlaceholderAPI:
+      load: BEFORE
+      required: false
+      join-classpath: true
+    LuckPerms:
+      load: BEFORE
+      required: false
+      join-classpath: true
+    LabyModServerAPI:
+      load: BEFORE
+      required: false
+      join-classpath: true
+    Images:
+      load: AFTER
+      required: false
+      join-classpath: false
+    FancyNpcs:
+      load: AFTER
+      required: false
+      join-classpath: false

@@ -1,0 +1,47 @@
+server:
+  title: "<bold><gradient:#1FADFF:#ABE0FF>Flunar</gradient></bold>"
+  prefix: "<bold><gradient:#1FADFF:#ABE0FF>Flunar</gradient></bold> <white><bold>»</bold></white>"
+  main-world: "world"
+  access-permission: "bauserver.access"
+
+messages:
+  # Einheitliche Meldung, z. B. bei /fly <Spieler> und /gm <Modus> <Spieler>.
+  player-not-online: "<red>Dieser Spieler ist nicht online."
+
+spawn:
+  x: -49.5
+  y: 84.0
+  z: -49.5
+  yaw: 0.0
+  pitch: 0.0
+
+paths:
+  server-root: "/home/netzwerk/Bauserver"
+  project-worlds: "world/dimensions/projekt"
+  private-worlds: "world/dimensions/privat"
+  backup-script: "/home/netzwerk/Bauserver/Shell/backup.sh"
+  export-script: "/home/netzwerk/Bauserver/Shell/worldexport.sh"
+
+templates:
+  lobby: "/home/netzwerk/simplecloud/templates/Lobby/world/dimensions/minecraft/overworld"
+
+online-time:
+  afk-warning-seconds: 30
+  afk-kick-seconds: 7200
+  active-reset-seconds: 30
+  tick-seconds: 10
+  # Onlinezeiten aller Spieler werden gemeinsam in einem SQL-Batch gespeichert.
+  database-save-seconds: 60
+  movement-threshold: 3.5
+
+ban-reasons:
+  1: "Chat-Verhalten"
+  2: "Unerlaubte Clientmods"
+  3: "Server-Missbrauch"
+  4: "Spam / Fluchen"
+  5: "Beleidigung / Respektlosigkeit"
+  6: "Werbung"
+  7: "Griefing"
+  8: "Bugusing / Exploits"
+  9: "Rassismus / Hassrede"
+  10: "Umgehung von Strafen"
