@@ -1,4 +1,4 @@
-# Diese Datei bleibt ausschließlich auf dem Bauserver und gehört nicht in öffentliche Repositories.
+#
 database:
   jdbc-url: "jdbc:mariadb://localhost:3360/username"
   username: "nutzername"
