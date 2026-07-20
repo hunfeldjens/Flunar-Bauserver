@@ -4,7 +4,7 @@
 
 **Das zentrale Paper-Plugin für Projektwelten, Bauteams und Serververwaltung auf Flunar.de.**
 
-![Version](https://img.shields.io/badge/Version-2.1.0-1FADFF?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-3.0.0-1FADFF?style=for-the-badge)
 ![Paper](https://img.shields.io/badge/Paper-26.1.2%2B-F7A81B?style=for-the-badge)
 ![Java](https://img.shields.io/badge/Java-25-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![MariaDB](https://img.shields.io/badge/MariaDB-Async-003545?style=for-the-badge&logo=mariadb&logoColor=white)
@@ -120,7 +120,7 @@ mobgriefing, keepinventory, locatorbar, advancements
    mvn clean package
    ```
 
-3. `target/Flunar-Bauserver-2.1.0.jar` in den `plugins`-Ordner des Servers kopieren.
+3. `target/Flunar-Bauserver-3.0.0.jar` in den `plugins`-Ordner des Servers kopieren.
 4. Den Server einmal starten, damit die Konfigurationsdateien erstellt werden.
 5. MariaDB-Zugang und Serverpfade konfigurieren.
 6. Den Server vollständig neu starten.
@@ -310,7 +310,7 @@ Danach im konsumierenden Plugin einbinden:
 <dependency>
     <groupId>eu.hunfeld</groupId>
     <artifactId>flunar-bauserver</artifactId>
-    <version>2.1.0</version>
+    <version>3.0.0</version>
     <scope>provided</scope>
 </dependency>
 ```
@@ -329,8 +329,8 @@ dependencies:
 ### API abrufen
 
 ```java
-import eu.hunfeld.flunarBauserver.FlunarBauserver;
-import eu.hunfeld.flunarBauserver.api.BauserverApi;
+import eu.hunfeld.flunarbauserver.FlunarBauserver;
+import eu.hunfeld.flunarbauserver.api.BauserverApi;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
@@ -426,7 +426,7 @@ Callbacks laufen nicht automatisch auf dem Bukkit-Hauptthread. Änderungen an Sp
 ## Projektstruktur
 
 ```text
-src/main/java/eu/hunfeld/flunarBauserver/
+src/main/java/eu/hunfeld/flunarbauserver/
 ├── api/          Öffentliche Java-API
 ├── chat/         Chat, Tablist und Placeholder-Anbindung
 ├── commands/     Befehle nach Fachbereich
@@ -465,14 +465,14 @@ mvn install
 Die fertige JAR befindet sich anschließend unter:
 
 ```text
-target/Flunar-Bauserver-2.1.0.jar
+target/Flunar-Bauserver-3.0.0.jar
 ```
 
 ---
 
 <div align="center">
 
-**Flunar-Bauserver 2.1.0**<br>
+**Flunar-Bauserver 3.0.0**<br>
 Entwickelt für das Flunar.de Bauserver-Netzwerk
 
 [hunfeld.eu](https://www.hunfeld.eu)

@@ -1,6 +1,6 @@
 name: Flunar-Bauserver
 version: '${project.version}'
-main: eu.hunfeld.flunarBauserver.FlunarBauserver
+main: eu.hunfeld.flunarbauserver.FlunarBauserver
 api-version: '26.1.2'
 description: Vollständiges Projekt-, Welt-, Team- und Bauserver-System
 authors: [Lehrling]
