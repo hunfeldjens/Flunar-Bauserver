@@ -12,7 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-/** Private Nachrichten, ohne vom Spieler eingegebene MiniMessage-Tags auszuwerten. */
+
 public final class MessageCommand extends BaseCommand {
   private final PrivateMessageService conversations;
 

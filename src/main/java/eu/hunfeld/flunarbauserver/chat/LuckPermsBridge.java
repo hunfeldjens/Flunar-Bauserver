@@ -1,5 +1,8 @@
 package eu.hunfeld.flunarbauserver.chat;
 
+import java.util.OptionalInt;
+import java.util.UUID;
+import java.util.function.Consumer;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.User;
@@ -9,30 +12,32 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
-/** Optional LuckPerms integration. No database calls are performed here. */
-public final class LuckPermsBridge {
-  private volatile Provider provider;
 
-  public String prefix(Player player) {
+public final class LuckPermsBridge {
+  private static volatile Provider provider;
+
+  private LuckPermsBridge() {}
+
+  public static String prefix(Player player) {
     Provider active = provider();
     return active == null ? null : active.prefix(player);
   }
 
-  public Integer highestGroupWeight(Player player) {
+  public static Integer highestGroupWeight(Player player) {
     Provider active = provider();
     return active == null ? null : active.highestGroupWeight(player);
   }
 
-  public void subscribe(Plugin plugin, java.util.function.Consumer<java.util.UUID> refresh) {
+  public static void subscribe(Plugin plugin, Consumer<UUID> refresh) {
     Provider active = provider();
     if (active != null) active.subscribe(plugin, refresh);
   }
 
-  private Provider provider() {
+  private static Provider provider() {
     Provider active = provider;
     if (active != null) return active;
     if (!Bukkit.getPluginManager().isPluginEnabled("LuckPerms")) return null;
-    synchronized (this) {
+    synchronized (LuckPermsBridge.class) {
       if (provider == null) provider = ApiProvider.create();
       return provider;
     }
@@ -43,7 +48,7 @@ public final class LuckPermsBridge {
 
     int highestGroupWeight(Player player);
 
-    void subscribe(Plugin plugin, java.util.function.Consumer<java.util.UUID> refresh);
+    void subscribe(Plugin plugin, Consumer<UUID> refresh);
   }
 
   private static final class ApiProvider implements Provider {
@@ -71,14 +76,14 @@ public final class LuckPermsBridge {
       User user = adapter.getUser(player);
       return user.getInheritedGroups(adapter.getQueryOptions(player)).stream()
           .map(Group::getWeight)
-          .filter(java.util.OptionalInt::isPresent)
-          .mapToInt(java.util.OptionalInt::getAsInt)
+          .filter(OptionalInt::isPresent)
+          .mapToInt(OptionalInt::getAsInt)
           .max()
           .orElse(0);
     }
 
     @Override
-    public void subscribe(Plugin plugin, java.util.function.Consumer<java.util.UUID> refresh) {
+    public void subscribe(Plugin plugin, Consumer<UUID> refresh) {
       api.getEventBus()
           .subscribe(
               plugin,

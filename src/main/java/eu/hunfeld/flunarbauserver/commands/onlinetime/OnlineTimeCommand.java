@@ -6,6 +6,7 @@ import eu.hunfeld.flunarbauserver.gui.OnlineTimeMenu;
 import eu.hunfeld.flunarbauserver.model.OnlineTimeRecord;
 import eu.hunfeld.flunarbauserver.service.OnlineTimeService;
 import eu.hunfeld.flunarbauserver.utils.Players;
+import eu.hunfeld.flunarbauserver.utils.TimeFormats;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -115,7 +116,7 @@ public final class OnlineTimeCommand extends BaseCommand {
     if (!sender.hasPermission("bauserver.admin")) {
       context
           .messages()
-          .send(sender, "<gray>Gesamte Onlinezeit: <green>" + OnlineTimeMenu.teamTime(total));
+          .send(sender, "<gray>Gesamte Onlinezeit: <green>" + TimeFormats.teamDuration(total));
       context
           .messages()
           .raw(
@@ -126,7 +127,9 @@ public final class OnlineTimeCommand extends BaseCommand {
     Player online = target.getPlayer();
     String world = online == null ? "-" : online.getWorld().getName();
     String session =
-        online == null ? "-" : OnlineTimeMenu.dhm(service.sessionActive(record.uuid()));
+        online == null
+            ? "-"
+            : TimeFormats.daysHoursMinutes(service.sessionActive(record.uuid()));
     context.messages().send(sender, "<gray>Anzahl der Verbindungen: <yellow>" + record.joins());
     context.messages().send(sender, "<gray>Aktuelles Projekt: <yellow>" + world);
     context.messages().send(sender, "<gray>Aktive Session: <green>" + session);
@@ -135,22 +138,23 @@ public final class OnlineTimeCommand extends BaseCommand {
           .messages()
           .send(
               sender,
-              "<gray>AFK Session: <red>" + OnlineTimeMenu.dhm(service.sessionAfk(record.uuid())));
+              "<gray>AFK Session: <red>"
+                  + TimeFormats.daysHoursMinutes(service.sessionAfk(record.uuid())));
     context
         .messages()
-        .send(sender, "<gray>Erster Login: <yellow>" + OnlineTimeMenu.date(record.firstSeen()));
+        .send(sender, "<gray>Erster Login: <yellow>" + TimeFormats.dateTime(record.firstSeen()));
     context
         .messages()
-        .send(sender, "<gray>Letzter Login: <yellow>" + OnlineTimeMenu.date(record.lastSeen()));
+        .send(sender, "<gray>Letzter Login: <yellow>" + TimeFormats.dateTime(record.lastSeen()));
     context
         .messages()
         .send(
             sender,
             "<gray>Aktiv Zeit: <green>"
-                + OnlineTimeMenu.dhm(active)
+                + TimeFormats.daysHoursMinutes(active)
                 + " <gray>- AFK: <red>"
-                + OnlineTimeMenu.dhm(afk));
-    context.messages().send(sender, "<gray>Gesamt Zeit: <green>" + OnlineTimeMenu.full(total));
+                + TimeFormats.daysHoursMinutes(afk));
+    context.messages().send(sender, "<gray>Gesamt Zeit: <green>" + TimeFormats.fullDuration(total));
     context
         .messages()
         .raw(
@@ -183,25 +187,25 @@ public final class OnlineTimeCommand extends BaseCommand {
                       .append(active)
                       .append('\n')
                       .append("  onlinetime_aktiv: '")
-                      .append(OnlineTimeMenu.dhm(active))
+                      .append(TimeFormats.daysHoursMinutes(active))
                       .append("'\n")
                       .append("  onlinetime_afk_sek: ")
                       .append(afk)
                       .append('\n')
                       .append("  onlinetime_afk: '")
-                      .append(OnlineTimeMenu.dhm(afk))
+                      .append(TimeFormats.daysHoursMinutes(afk))
                       .append("'\n")
                       .append("  onlinetime_gesamt_sek: ")
                       .append(total)
                       .append('\n')
                       .append("  onlinetime_gesamt: '")
-                      .append(OnlineTimeMenu.full(total))
+                      .append(TimeFormats.fullDuration(total))
                       .append("'\n")
                       .append("  first_seen: '")
-                      .append(OnlineTimeMenu.date(record.firstSeen()))
+                      .append(TimeFormats.dateTime(record.firstSeen()))
                       .append("'\n")
                       .append("  last_seen: '")
-                      .append(OnlineTimeMenu.date(record.lastSeen()))
+                      .append(TimeFormats.dateTime(record.lastSeen()))
                       .append("'\n\n");
                 }
                 Path directory = context.plugin().getDataFolder().toPath().resolve("exports");

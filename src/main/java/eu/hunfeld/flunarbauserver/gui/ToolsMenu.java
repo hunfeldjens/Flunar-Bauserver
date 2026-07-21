@@ -26,7 +26,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
-/** Originale Operator-Item-Menüs aus 05_gui.sk. */
+
 public final class ToolsMenu extends AbstractMenu implements Listener {
   private final NamespacedKey pistonToolKey;
   private static final String FIXED_MINECART_TAG = "flunar_fixed_minecart";
@@ -60,7 +60,6 @@ public final class ToolsMenu extends AbstractMenu implements Listener {
     inventory.setItem(19, named(Material.SPAWNER, "<dark_red><bold>Spawner"));
     inventory.setItem(20, named(Material.TRIAL_SPAWNER, "<red><bold>Trial-Spawner"));
     inventory.setItem(21, named(Material.VAULT, "<yellow><bold>Vault"));
-    // PISTON_HEAD ist in Paper 26.1.2 ein Block, aber kein gültiger ItemStack.
     ItemStack pistonTool =
         named(
             Material.PISTON,

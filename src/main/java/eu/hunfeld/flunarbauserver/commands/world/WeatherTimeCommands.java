@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-/** Groups the five tiny world-state commands without mixing them into larger command routers. */
+
 public final class WeatherTimeCommands extends BaseCommand {
   public WeatherTimeCommands(BauserverContext context) {
     super(context);
@@ -49,7 +49,6 @@ public final class WeatherTimeCommands extends BaseCommand {
       default ->
           throw new IllegalStateException("Nicht unterstützter Weltbefehl: " + command.getName());
     }
-    // Wetter- und Zeitänderungen gehören ausschließlich in die Actionbar.
     context.messages().actionAll(message);
     return true;
   }

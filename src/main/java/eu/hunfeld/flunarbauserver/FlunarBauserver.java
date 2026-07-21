@@ -137,10 +137,7 @@ public final class FlunarBauserver extends JavaPlugin {
             onlineTimeMenu,
             moderationHistoryMenu);
 
-    /*
-     * The initial connection is intentionally awaited during plugin startup. Runtime SQL remains
-     * asynchronous, but no player or AFTER dependency may observe half-filled caches.
-     */
+
     boolean databaseReady = database.initialise().join();
     if (!databaseReady) {
       getLogger()

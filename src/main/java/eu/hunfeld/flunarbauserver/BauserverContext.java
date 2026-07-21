@@ -17,9 +17,10 @@ import eu.hunfeld.flunarbauserver.service.WorldService;
 import eu.hunfeld.flunarbauserver.service.WorldTransferService;
 import eu.hunfeld.flunarbauserver.settings.Settings;
 import eu.hunfeld.flunarbauserver.utils.Messages;
+import org.bukkit.plugin.Plugin;
 
 public record BauserverContext(
-    FlunarBauserver plugin,
+    Plugin plugin,
     Settings settings,
     Messages messages,
     DatabaseManager database,

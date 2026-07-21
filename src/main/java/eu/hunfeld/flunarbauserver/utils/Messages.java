@@ -10,8 +10,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public final class Messages {
-  private final MiniMessage mini = MiniMessage.miniMessage();
-  private final LegacyComponentSerializer legacyAmpersand =
+  private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
+  private static final LegacyComponentSerializer LEGACY_AMPERSAND =
       LegacyComponentSerializer.builder()
           .character('&')
           .hexColors()
@@ -24,12 +24,11 @@ public final class Messages {
   }
 
   public Component parse(String text) {
-    return mini.deserialize(text == null ? "" : text);
+    return MINI_MESSAGE.deserialize(text == null ? "" : text);
   }
 
-  /** Parst spielerfreundliche Farbcodes wie &a, &l oder &#12ABEF. */
   public Component parseLegacy(String text) {
-    return legacyAmpersand.deserialize(text == null ? "" : text);
+    return LEGACY_AMPERSAND.deserialize(text == null ? "" : text);
   }
 
   public Component parse(String text, Map<String, ?> values) {
@@ -63,5 +62,4 @@ public final class Messages {
   public void noPermission(CommandSender sender) {
     send(sender, "<gray>Leider kennen wir diesen Befehl nicht.");
   }
-
 }

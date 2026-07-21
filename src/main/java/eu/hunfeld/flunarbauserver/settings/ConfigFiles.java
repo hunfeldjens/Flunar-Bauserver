@@ -22,7 +22,7 @@ public final class ConfigFiles {
     if (!target.exists()) plugin.saveResource(name, false);
   }
 
-  /** Ergänzt neue Konfigurationsschlüssel, ohne bereits angepasste Werte zu überschreiben. */
+
   private static YamlConfiguration loadAndMerge(JavaPlugin plugin, String name) {
     saveIfMissing(plugin, name);
     File target = new File(plugin.getDataFolder(), name);

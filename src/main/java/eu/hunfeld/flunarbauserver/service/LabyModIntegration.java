@@ -8,12 +8,7 @@ import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 
-/**
- * Classloader-safe entry point for the optional LabyMod API.
- *
- * <p>This class deliberately has no LabyMod type in its signature or constant pool. Paper can
- * therefore load the Bauserver plugin even when LabyModServerAPI is not installed.
- */
+
 public final class LabyModIntegration {
   private static final String IMPLEMENTATION = "eu.hunfeld.flunarbauserver.service.LabyModService";
 

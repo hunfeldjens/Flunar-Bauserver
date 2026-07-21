@@ -3,7 +3,9 @@ package eu.hunfeld.flunarbauserver.commands.player;
 import eu.hunfeld.flunarbauserver.BauserverContext;
 import eu.hunfeld.flunarbauserver.commands.BaseCommand;
 import eu.hunfeld.flunarbauserver.gui.BuilderServerMenu;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -49,12 +51,12 @@ public final class BauserverMenuCommand extends BaseCommand {
       @NotNull String alias,
       @NotNull String[] args) {
     if (!(sender instanceof Player player) || args.length != 1) return List.of();
-    List<String> options = new java.util.ArrayList<>();
+    List<String> options = new ArrayList<>();
     options.add("menu");
     options.addAll(menu.available(player));
-    String search = args[0].toLowerCase(java.util.Locale.ROOT);
+    String search = args[0].toLowerCase(Locale.ROOT);
     return options.stream()
-        .filter(value -> value.toLowerCase(java.util.Locale.ROOT).startsWith(search))
+        .filter(value -> value.toLowerCase(Locale.ROOT).startsWith(search))
         .toList();
   }
 }

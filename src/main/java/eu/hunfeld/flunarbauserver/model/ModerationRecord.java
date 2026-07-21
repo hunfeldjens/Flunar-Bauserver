@@ -3,7 +3,7 @@ package eu.hunfeld.flunarbauserver.model;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-/** Ein historischer Ban- oder Kick-Datensatz aus MariaDB. */
+
 public record ModerationRecord(
     long id,
     UUID uuid,

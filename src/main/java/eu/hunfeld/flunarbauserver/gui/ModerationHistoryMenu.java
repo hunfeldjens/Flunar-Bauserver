@@ -21,7 +21,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 
-/** Seitenweise Ban- und Kick-Historie mit einer gebündelten Datenbankabfrage pro Seite. */
+
 public final class ModerationHistoryMenu extends AbstractMenu implements Listener {
   private static final int PAGE_SIZE = 45;
   private static final DateTimeFormatter DATE = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
@@ -74,7 +74,7 @@ public final class ModerationHistoryMenu extends AbstractMenu implements Listene
               Material.BARRIER,
               "<red>Keine Einträge vorhanden",
               List.of("<gray>In dieser Historie ist noch nichts gespeichert.")));
-    for (int slot = 45; slot < 54; slot++) inventory.setItem(slot, filler());
+    for (int slot = 45; slot < 54; slot++) inventory.setItem(slot, DECORATION_ITEM);
     if (page.page() > 1)
       inventory.setItem(
           45,
@@ -156,10 +156,6 @@ public final class ModerationHistoryMenu extends AbstractMenu implements Listene
     }
     if (!line.isEmpty()) lines.add(prefix + line);
     return lines.isEmpty() ? List.of(prefix + "Kein Grund angegeben") : lines;
-  }
-
-  private ItemStack filler() {
-    return named(Material.GRAY_STAINED_GLASS_PANE, " ", List.of());
   }
 
   public enum Type {

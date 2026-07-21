@@ -2,6 +2,7 @@ package eu.hunfeld.flunarbauserver.commands.player;
 
 import eu.hunfeld.flunarbauserver.BauserverContext;
 import eu.hunfeld.flunarbauserver.commands.BaseCommand;
+import java.util.List;
 import org.bukkit.attribute.*;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
@@ -33,10 +34,10 @@ public final class SizeCommand extends BaseCommand {
   }
 
   @Override
-  public java.util.List<String> onTabComplete(
+  public List<String> onTabComplete(
       @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
     return a.length == 1
-        ? java.util.List.of("0.2", "0.4", "0.6", "0.8", "1", "1.2", "1.4", "1.6", "1.8", "2")
-        : java.util.List.of();
+        ? List.of("0.2", "0.4", "0.6", "0.8", "1", "1.2", "1.4", "1.6", "1.8", "2")
+        : List.of();
   }
 }

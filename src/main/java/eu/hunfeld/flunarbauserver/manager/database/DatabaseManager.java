@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import org.mariadb.jdbc.Driver;
 
-/** Connection pool and the only executor used for SQL work. */
+
 public final class DatabaseManager implements AutoCloseable {
   private final FlunarBauserver plugin;
   private final DatabaseSettings settings;
@@ -67,7 +67,6 @@ public final class DatabaseManager implements AutoCloseable {
             config.addDataSourceProperty(
                 "connectTimeout", Math.toIntExact(settings.connectionTimeoutMs()));
             config.addDataSourceProperty("socketTimeout", 30_000);
-            // Connector/J 3.5.8 rewrites executeBatch inserts to one multi-value statement.
             config.addDataSourceProperty("rewriteBatchedStatements", true);
             dataSource = new HikariDataSource(config);
             try (Connection connection = connection()) {

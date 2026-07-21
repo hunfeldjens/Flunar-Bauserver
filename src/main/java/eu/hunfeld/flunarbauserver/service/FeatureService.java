@@ -17,8 +17,6 @@ public final class FeatureService {
   }
 
   public void apply(World world) {
-    // Feste Bauserver-Regeln aus 04_listener.sk. Sie gelten unabhängig von den
-    // umschaltbaren Features in jeder Haupt-, Projekt- und Privatwelt.
     world.setGameRule(GameRules.SPAWN_MONSTERS, false);
     world.setGameRule(GameRules.SPAWN_MOBS, enabled("mobspawn"));
     world.setGameRule(GameRules.SPAWN_PATROLS, false);
@@ -38,7 +36,6 @@ public final class FeatureService {
     world.setGameRule(GameRules.FALL_DAMAGE, enabled("falldamage"));
     world.setGameRule(GameRules.PVP, false);
 
-    // Umschaltbare Regeln aus /feature.
     boolean dayNight = enabled("daynight");
     world.setGameRule(GameRules.ADVANCE_TIME, dayNight);
     if (!dayNight) world.setTime(6_000L);
@@ -47,8 +44,6 @@ public final class FeatureService {
     world.setGameRule(GameRules.MOB_GRIEFING, enabled("mobgriefing"));
     world.setGameRule(GameRules.KEEP_INVENTORY, enabled("keepinventory"));
     world.setGameRule(GameRules.COMMAND_BLOCK_OUTPUT, enabled("commandblocks"));
-    // Die Locator-Bar bleibt standardmäßig aus; sie kann nur bewusst über das
-    // entsprechende Feature aktiviert werden.
     world.setGameRule(GameRules.LOCATOR_BAR, enabled("locatorbar"));
     world.setGameRule(GameRules.SHOW_ADVANCEMENT_MESSAGES, enabled("advancements"));
   }

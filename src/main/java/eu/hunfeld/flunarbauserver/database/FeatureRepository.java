@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -113,7 +114,7 @@ public final class FeatureRepository implements CacheRepository {
   }
 
   public CompletableFuture<Boolean> setAll(Map<String, Boolean> values) {
-    Map<String, Boolean> requested = new java.util.LinkedHashMap<>();
+    Map<String, Boolean> requested = new LinkedHashMap<>();
     NAMES.forEach(name -> requested.put(name, Boolean.TRUE.equals(values.get(name))));
     return database.submit(
         connection -> {

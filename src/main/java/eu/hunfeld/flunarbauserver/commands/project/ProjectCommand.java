@@ -14,7 +14,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-/** Thin router only. All project behavior lives in one class per subcommand. */
+
 public final class ProjectCommand extends BaseCommand {
   private final ProjectSubcommand overview;
   private final ProjectSubcommand help;

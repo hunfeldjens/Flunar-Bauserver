@@ -57,10 +57,10 @@ public final class ModerationRepository implements CacheRepository {
     return history(false, page, pageSize);
   }
 
-  /** Lädt pro GUI-Aufruf eine gebündelte, begrenzte Seite statt einzelner Datensätze. */
+
   private CompletableFuture<ModerationHistoryPage> history(
       boolean bans, int requestedPage, int requestedPageSize) {
-    int pageSize = Math.max(1, Math.min(45, requestedPageSize));
+    int pageSize = Math.clamp(requestedPageSize, 1, 45);
     String table = bans ? "server_bans" : "server_kicks";
     String activeColumn = bans ? "active" : "0 AS active";
     return database.submit(
@@ -72,7 +72,7 @@ public final class ModerationRepository implements CacheRepository {
             total = result.getLong(1);
           }
           int pages = Math.max(1, (int) Math.ceil(total / (double) pageSize));
-          int page = Math.max(1, Math.min(requestedPage, pages));
+          int page = Math.clamp(requestedPage, 1, pages);
           int offset = (page - 1) * pageSize;
           List<ModerationRecord> entries = new ArrayList<>();
           try (PreparedStatement statement =

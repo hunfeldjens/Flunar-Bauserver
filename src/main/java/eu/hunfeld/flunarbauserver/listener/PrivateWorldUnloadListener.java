@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitTask;
 
-/** Speichert und entlädt eine leere Privatwelt fünf Minuten nach dem Verlassen. */
+
 public final class PrivateWorldUnloadListener implements Listener {
   private static final long UNLOAD_DELAY_TICKS = 5L * 60L * 20L;
   private final FlunarBauserver plugin;

@@ -2,6 +2,7 @@ package eu.hunfeld.flunarbauserver.gui;
 
 import eu.hunfeld.flunarbauserver.BauserverContext;
 import eu.hunfeld.flunarbauserver.utils.UiSound;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -23,7 +24,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
-/** Zentrale, permissionsabhängige Navigation zu allen Bauserver-GUIs. */
+
 public final class BuilderServerMenu extends AbstractMenu implements Listener {
   private final ProjectMenu projects;
   private final ProjectInfoMenu projectInfos;
@@ -76,7 +77,8 @@ public final class BuilderServerMenu extends AbstractMenu implements Listener {
     Inventory inventory =
         Bukkit.createInventory(holder, 27, context.messages().parse("<aqua><bold>Bauserver-Menüs"));
     holder.inventory = inventory;
-    for (int slot = 0; slot < inventory.getSize(); slot++) inventory.setItem(slot, filler());
+    for (int slot = 0; slot < inventory.getSize(); slot++)
+      inventory.setItem(slot, DECORATION_ITEM);
     add(player, inventory, destinations, 10, Destination.PROJECTS);
     add(player, inventory, destinations, 11, Destination.PROJECT_INFOS);
     add(player, inventory, destinations, 12, Destination.TOOLS);
@@ -99,7 +101,7 @@ public final class BuilderServerMenu extends AbstractMenu implements Listener {
   }
 
   public List<String> available(Player player) {
-    return java.util.Arrays.stream(Destination.values())
+    return Arrays.stream(Destination.values())
         .filter(destination -> player.hasPermission(destination.permission))
         .map(destination -> destination.commandName)
         .toList();
@@ -163,10 +165,6 @@ public final class BuilderServerMenu extends AbstractMenu implements Listener {
     return item.getItemMeta()
         .getPersistentDataContainer()
         .has(menuItemKey, PersistentDataType.BYTE);
-  }
-
-  private ItemStack filler() {
-    return named(Material.GRAY_STAINED_GLASS_PANE, " ", List.of());
   }
 
   private enum Destination {
@@ -242,7 +240,7 @@ public final class BuilderServerMenu extends AbstractMenu implements Listener {
 
     private static Destination byName(String value) {
       String normalized = value.toLowerCase(Locale.ROOT);
-      return java.util.Arrays.stream(values())
+      return Arrays.stream(values())
           .filter(destination -> destination.commandName.equals(normalized))
           .findFirst()
           .orElse(null);

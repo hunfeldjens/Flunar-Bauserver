@@ -113,7 +113,7 @@ public final class WorldService {
       player.removePotionEffect(effect.getType());
   }
 
-  /** Entfernt sofort alle Spieler, die nach einer Whitelist-Änderung keinen Zugriff mehr haben. */
+
   public int evacuateUnauthorized(String worldName, String reason) {
     World world = loaded(worldName).orElse(null);
     if (world == null) return 0;
@@ -127,7 +127,7 @@ public final class WorldService {
     return moved;
   }
 
-  /** Teleportiert alle Spieler mit Begründung und entlädt die Projektwelt danach. */
+
   public int evacuateAndUnload(String worldName, String reason) {
     World world = loaded(worldName).orElse(null);
     if (world == null) return 0;

@@ -60,7 +60,7 @@ public final class ProjectAccessRepository implements CacheRepository {
         .collect(java.util.stream.Collectors.toUnmodifiableSet());
   }
 
-  /** Event-safe, cache-only access decision. A missing DB cache fails closed. */
+
   public boolean mayEnter(UUID uuid, String world, boolean admin) {
     if (!database.isReady()) return false;
     if (admin) return true;

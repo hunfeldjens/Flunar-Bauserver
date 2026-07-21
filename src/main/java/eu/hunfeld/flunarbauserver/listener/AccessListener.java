@@ -22,10 +22,7 @@ public final class AccessListener implements Listener {
 
   public AccessListener(BauserverContext context) {
     this.context = context;
-    LuckPermsBridge luckPerms = new LuckPermsBridge();
-    luckPerms.subscribe(context.plugin(), this::scheduleAccessCheck);
-    // Zusätzlicher Cache-Check als sichere Rückfallebene, falls Rechte durch ein
-    // anderes Permission-Plugin oder ohne LuckPerms-Event geändert werden.
+    LuckPermsBridge.subscribe(context.plugin(), this::scheduleAccessCheck);
     Bukkit.getScheduler().runTaskTimer(context.plugin(), this::enforceOnlineAccess, 40L, 40L);
   }
 

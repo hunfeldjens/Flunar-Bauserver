@@ -13,14 +13,12 @@ import org.bukkit.scoreboard.Team;
 public final class TabService {
   private final FlunarBauserver plugin;
   private final Messages messages;
-  private final PlaceholderBridge placeholders = new PlaceholderBridge();
-  private final LuckPermsBridge luckPerms = new LuckPermsBridge();
   private final LegacyComponentSerializer legacy = LegacyComponentSerializer.legacySection();
 
   public TabService(FlunarBauserver plugin, Messages messages) {
     this.plugin = plugin;
     this.messages = messages;
-    luckPerms.subscribe(
+    LuckPermsBridge.subscribe(
         plugin,
         uuid ->
             Bukkit.getScheduler()
@@ -33,8 +31,8 @@ public final class TabService {
   }
 
   public Component prefix(Player player) {
-    String value = luckPerms.prefix(player);
-    if (value == null) value = placeholders.apply(player, "%luckperms_prefix%");
+    String value = LuckPermsBridge.prefix(player);
+    if (value == null) value = PlaceholderBridge.apply(player, "%luckperms_prefix%");
     if (value.equals("%luckperms_prefix%")) value = "";
     return legacy.deserialize(org.bukkit.ChatColor.translateAlternateColorCodes('&', value));
   }
@@ -42,13 +40,11 @@ public final class TabService {
   public void update(Player player) {
     Component prefix = prefix(player);
     player.playerListName(prefix.append(Component.text(player.getName(), NamedTextColor.WHITE)));
-    Integer directWeight = luckPerms.highestGroupWeight(player);
+    Integer directWeight = LuckPermsBridge.highestGroupWeight(player);
     int weight =
         directWeight == null
-            ? parseWeight(placeholders.apply(player, "%luckperms_highest_group_weight%"))
+            ? parseWeight(PlaceholderBridge.apply(player, "%luckperms_highest_group_weight%"))
             : directWeight;
-    // Seit 26.x wird playerListOrder vor der Scoreboard-Team-Sortierung ausgewertet.
-    // Größere LuckPerms-Gewichte sollen deshalb weiter oben stehen.
     player.setPlayerListOrder(Math.max(1, weight + 1));
     updateTeam(player, prefix, weight);
     Component header =
@@ -68,7 +64,7 @@ public final class TabService {
     Bukkit.getOnlinePlayers().forEach(this::update);
   }
 
-  /** Entfernt den Spieler aus seinem Sortier-Team, damit keine alten Nametags zurückbleiben. */
+
   public void remove(Player player) {
     Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
     Team current = scoreboard.getEntryTeam(player.getName());
@@ -106,7 +102,7 @@ public final class TabService {
   }
 
   private static String teamName(Player player, int weight) {
-    int order = Math.max(0, Math.min(9999, 9999 - weight));
+    int order = Math.clamp(9999 - weight, 0, 9999);
     return String.format(
         java.util.Locale.ROOT, "bs_%04d_%08x", order, player.getUniqueId().hashCode());
   }

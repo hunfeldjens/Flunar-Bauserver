@@ -2,12 +2,15 @@ package eu.hunfeld.flunarbauserver.gui;
 
 import eu.hunfeld.flunarbauserver.BauserverContext;
 import java.util.List;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-/** Shared item construction for Bauserver inventory menus. */
+
 abstract class AbstractMenu {
+  protected static final ItemStack DECORATION_ITEM = decorationItem();
+
   protected final BauserverContext context;
 
   protected AbstractMenu(BauserverContext context) {
@@ -23,6 +26,14 @@ abstract class AbstractMenu {
     ItemMeta meta = item.getItemMeta();
     meta.displayName(context.messages().parse(name));
     if (!lore.isEmpty()) meta.lore(lore.stream().map(context.messages()::parse).toList());
+    item.setItemMeta(meta);
+    return item;
+  }
+
+  private static ItemStack decorationItem() {
+    ItemStack item = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
+    ItemMeta meta = item.getItemMeta();
+    meta.displayName(Component.text(" "));
     item.setItemMeta(meta);
     return item;
   }

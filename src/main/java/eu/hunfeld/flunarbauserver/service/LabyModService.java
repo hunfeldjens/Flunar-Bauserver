@@ -16,11 +16,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 
-/** Optional bridge to the separately installed LabyMod 4 Server API plugin. */
 public final class LabyModService implements Listener {
   private final FlunarBauserver plugin;
   private final LabyModSettings settings;
-  private final PlaceholderBridge placeholders = new PlaceholderBridge();
 
   public LabyModService(FlunarBauserver plugin, LabyModSettings settings) {
     this.plugin = plugin;
@@ -95,7 +93,7 @@ public final class LabyModService implements Listener {
             .replace("{player}", player.getName())
             .replace("{world}", player.getWorld().getName())
             .replace("{project}", worldDisplay(player));
-    return placeholders.apply(player, value);
+    return PlaceholderBridge.apply(player, value);
   }
 
   private static String icon(String configured) {

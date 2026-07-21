@@ -18,7 +18,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.util.CachedServerIcon;
 
-/** Lädt das konfigurierbare Serverlisten-Icon einmalig und niemals auf dem Server-Thread. */
+
 public final class ServerListIconService implements Listener {
   private final FlunarBauserver plugin;
   private volatile CachedServerIcon icon;

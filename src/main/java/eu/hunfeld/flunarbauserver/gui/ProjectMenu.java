@@ -30,7 +30,7 @@ public final class ProjectMenu extends AbstractMenu implements Listener {
   public void open(Player player, int requestedPage, boolean admin) {
     List<Project> projects = context.projects().all();
     int pages = Math.max(1, (projects.size() + PAGE_SIZE - 1) / PAGE_SIZE);
-    int page = Math.max(0, Math.min(requestedPage, pages - 1));
+    int page = Math.clamp(requestedPage, 0, pages - 1);
     Holder holder = new Holder(page, admin, projects);
     Inventory inventory =
         Bukkit.createInventory(
@@ -43,8 +43,7 @@ public final class ProjectMenu extends AbstractMenu implements Listener {
                         ? "<red>Bauprojekte (Admin) <dark_gray>– Seite " + (page + 1) + "/" + pages
                         : "Bauprojekte <dark_gray>– Seite " + (page + 1) + "/" + pages));
     holder.inventory = inventory;
-    for (int slot = 18; slot <= 26; slot++)
-      inventory.setItem(slot, named(Material.GRAY_STAINED_GLASS_PANE, " "));
+    for (int slot = 18; slot <= 26; slot++) inventory.setItem(slot, DECORATION_ITEM);
     int start = page * PAGE_SIZE;
     for (int slot = 0; slot < PAGE_SIZE && start + slot < projects.size(); slot++) {
       Project project = projects.get(start + slot);
@@ -554,10 +553,7 @@ public final class ProjectMenu extends AbstractMenu implements Listener {
     return lines;
   }
 
-  /**
-   * Bricht Spielerbeschreibungen um und übernimmt den zuletzt verwendeten &-Farbcode in die nächste
-   * Lore-Zeile.
-   */
+
   private static List<String> wrapLegacy(String text) {
     if (text == null || text.isBlank()) return List.of("&7");
     String[] words = text.strip().split("\\s+");

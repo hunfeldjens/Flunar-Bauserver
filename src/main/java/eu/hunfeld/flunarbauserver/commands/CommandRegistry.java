@@ -16,7 +16,7 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.jetbrains.annotations.NotNull;
 
-/** Registers the existing command handlers through Paper's native command API. */
+
 public final class CommandRegistry {
   private final FlunarBauserver plugin;
   private final YamlConfiguration definitions;
@@ -53,8 +53,6 @@ public final class CommandRegistry {
 
           @Override
           public Collection<String> suggest(CommandSourceStack source, String[] args) {
-            // Paper liefert bei genau einem abschließenden Leerzeichen ein leeres Array.
-            // Bukkit-TabCompleter erwarten an dieser Stelle dagegen ein leeres erstes Argument.
             String[] normalizedArgs = args.length == 0 ? new String[] {""} : args;
             List<String> suggestions =
                 handler.onTabComplete(source.getSender(), bridge, name, normalizedArgs);

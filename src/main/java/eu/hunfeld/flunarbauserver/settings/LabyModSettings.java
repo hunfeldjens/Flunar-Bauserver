@@ -3,7 +3,7 @@ package eu.hunfeld.flunarbauserver.settings;
 import java.util.List;
 import org.bukkit.configuration.file.FileConfiguration;
 
-/** Optional LabyMod 4 client features. Every feature can be switched off independently. */
+
 public record LabyModSettings(
     boolean enabled,
     boolean logConnections,
@@ -32,7 +32,7 @@ public record LabyModSettings(
         new Subtitle(
             config.getBoolean("features.subtitle.enabled", false),
             config.getString("features.subtitle.text", "{player}"),
-            Math.max(0.1D, Math.min(3.0D, config.getDouble("features.subtitle.size", 0.8D)))),
+            Math.clamp(config.getDouble("features.subtitle.size", 0.8D), 0.1D, 3.0D)),
         new TabListBanner(
             config.getBoolean("features.tab-list-banner.enabled", false),
             config.getString("features.tab-list-banner.image-url", "")),

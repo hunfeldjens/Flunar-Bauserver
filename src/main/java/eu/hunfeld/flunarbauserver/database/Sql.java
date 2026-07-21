@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.sql.Types;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.UUID;
@@ -50,7 +51,7 @@ public final class Sql {
 
   public static void nullableNumber(PreparedStatement statement, int index, Number value)
       throws SQLException {
-    if (value == null) statement.setNull(index, java.sql.Types.DOUBLE);
+    if (value == null) statement.setNull(index, Types.DOUBLE);
     else statement.setDouble(index, value.doubleValue());
   }
 }

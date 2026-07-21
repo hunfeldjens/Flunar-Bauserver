@@ -54,7 +54,6 @@ public final class ElevatorListener implements Listener {
       Block platform = player.getWorld().getBlockAt(x, y, z);
       if (platform.getType() != Material.NETHERITE_BLOCK) continue;
       Block feet = platform.getRelative(0, 1, 0);
-      // Das Skript prüft bewusst nur den Zielblock direkt über der Plattform.
       if (!feet.isPassable()) continue;
       Location target = origin.clone();
       target.setY(platform.getY() + 1.0);
@@ -76,8 +75,6 @@ public final class ElevatorListener implements Listener {
   }
 
   private static Block blockBelow(Player player) {
-    // 0,01 statt eines ganzen Blocks funktioniert auch dann zuverlässig, wenn Paper
-    // das Sprung-Event schon wenige Millimeter oberhalb der Blockkante auslöst.
     return player.getLocation().clone().subtract(0, 0.01, 0).getBlock();
   }
 }

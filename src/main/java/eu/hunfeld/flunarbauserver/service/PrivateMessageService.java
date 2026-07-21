@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-/** Hält ausschließlich die letzte Unterhaltung für /r im Arbeitsspeicher. */
+
 public final class PrivateMessageService {
   private final ConcurrentHashMap<UUID, UUID> replyTargets = new ConcurrentHashMap<>();
 

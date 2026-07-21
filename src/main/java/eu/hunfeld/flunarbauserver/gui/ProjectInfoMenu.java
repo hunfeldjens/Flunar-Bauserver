@@ -21,7 +21,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
-/** Projekt-Info-Übersicht, Detailansicht und Löschabfrage aus 05_gui.sk. */
+
 public final class ProjectInfoMenu extends AbstractMenu implements Listener {
 
   public ProjectInfoMenu(BauserverContext context) {
@@ -43,7 +43,7 @@ public final class ProjectInfoMenu extends AbstractMenu implements Listener {
             : "<dark_green>Projekt-Infos <dark_gray>(" + filter + ")";
     Inventory inventory = Bukkit.createInventory(holder, 54, context.messages().parse(title));
     holder.inventory = inventory;
-    for (int slot = 45; slot <= 53; slot++) inventory.setItem(slot, filler());
+    for (int slot = 45; slot <= 53; slot++) inventory.setItem(slot, DECORATION_ITEM);
     inventory.setItem(
         49, named(Material.BARRIER, "<red><bold>Schließen", List.of("<gray>Klick zum Schließen")));
 
@@ -321,12 +321,8 @@ public final class ProjectInfoMenu extends AbstractMenu implements Listener {
     Inventory inventory = Bukkit.createInventory(holder, size, context.messages().parse(title));
     if (holder instanceof DetailHolder detail) detail.inventory = inventory;
     if (holder instanceof DeleteHolder delete) delete.inventory = inventory;
-    for (int slot = 0; slot < size; slot++) inventory.setItem(slot, filler());
+    for (int slot = 0; slot < size; slot++) inventory.setItem(slot, DECORATION_ITEM);
     return inventory;
-  }
-
-  private ItemStack filler() {
-    return named(Material.GRAY_STAINED_GLASS_PANE, " ");
   }
 
   private void show(Player player, Inventory inventory) {

@@ -14,7 +14,7 @@ import org.bukkit.event.hanging.HangingPlaceEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 
-/** Auf der Hauptwelt dürfen ausschließlich Builder die Welt verändern. */
+
 public final class MainWorldBuildProtectionListener implements Listener {
   private final WorldService worlds;
   private final Messages messages;

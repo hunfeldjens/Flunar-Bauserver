@@ -46,8 +46,7 @@ public final class FeatureMenu extends AbstractMenu implements Listener {
           slot,
           named(ICONS.getOrDefault(feature, Material.STONE), "<yellow><bold>" + feature, lore));
     }
-    for (int slot = 45; slot <= 53; slot++)
-      inventory.setItem(slot, named(Material.GRAY_STAINED_GLASS_PANE, " ", List.of()));
+    for (int slot = 45; slot <= 53; slot++) inventory.setItem(slot, DECORATION_ITEM);
     inventory.setItem(
         47,
         named(

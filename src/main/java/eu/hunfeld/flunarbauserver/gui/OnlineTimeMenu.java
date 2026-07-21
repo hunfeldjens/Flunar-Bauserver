@@ -3,8 +3,8 @@ package eu.hunfeld.flunarbauserver.gui;
 import eu.hunfeld.flunarbauserver.BauserverContext;
 import eu.hunfeld.flunarbauserver.model.OnlineTimeRecord;
 import eu.hunfeld.flunarbauserver.service.OnlineTimeService;
+import eu.hunfeld.flunarbauserver.utils.TimeFormats;
 import eu.hunfeld.flunarbauserver.utils.UiSound;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -22,10 +22,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 
-/** Admin-GUI aus 08_onlinetime.sk. */
+
 public final class OnlineTimeMenu extends AbstractMenu implements Listener {
   private static final int PAGE_SIZE = 45;
-  private static final DateTimeFormatter DATE = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
   private final OnlineTimeService service;
 
   public OnlineTimeMenu(BauserverContext context, OnlineTimeService service) {
@@ -38,7 +37,7 @@ public final class OnlineTimeMenu extends AbstractMenu implements Listener {
     for (OnlineTimeRecord record : context.onlineTime().all()) entries.add(view(record));
     entries.sort(Comparator.comparingInt(View::total).reversed());
     int pages = Math.max(1, (entries.size() + PAGE_SIZE - 1) / PAGE_SIZE);
-    int page = Math.max(1, Math.min(requestedPage, pages));
+    int page = Math.clamp(requestedPage, 1, pages);
     OverviewHolder holder = new OverviewHolder(page, pages, List.copyOf(entries));
     Inventory inventory =
         Bukkit.createInventory(
@@ -49,7 +48,7 @@ public final class OnlineTimeMenu extends AbstractMenu implements Listener {
     int start = (page - 1) * PAGE_SIZE;
     for (int slot = 0; slot < PAGE_SIZE && start + slot < entries.size(); slot++)
       inventory.setItem(slot, playerHead(entries.get(start + slot), true));
-    for (int slot = 45; slot <= 53; slot++) inventory.setItem(slot, filler());
+    for (int slot = 45; slot <= 53; slot++) inventory.setItem(slot, DECORATION_ITEM);
     if (page > 1)
       inventory.setItem(
           45,
@@ -225,10 +224,14 @@ public final class OnlineTimeMenu extends AbstractMenu implements Listener {
 
   private ItemStack playerHead(View entry, boolean clickable) {
     List<String> lore = new ArrayList<>();
-    lore.add("<gray>Gesamt: <green>" + full(entry.total));
-    lore.add("<gray>Aktiv: <green>" + dhm(entry.active) + " <gray>| AFK: <red>" + dhm(entry.afk));
+    lore.add("<gray>Gesamt: <green>" + TimeFormats.fullDuration(entry.total));
+    lore.add(
+        "<gray>Aktiv: <green>"
+            + TimeFormats.daysHoursMinutes(entry.active)
+            + " <gray>| AFK: <red>"
+            + TimeFormats.daysHoursMinutes(entry.afk));
     lore.add("<gray>Verbindungen: <yellow>" + entry.record.joins());
-    lore.add("<gray>Letzter Login: <yellow>" + date(entry.record.lastSeen()));
+    lore.add("<gray>Letzter Login: <yellow>" + TimeFormats.dateTime(entry.record.lastSeen()));
     if (clickable) {
       lore.add("");
       lore.add("<aqua>Klick: Verwalten <dark_gray>(Reset / Löschen)");
@@ -245,65 +248,13 @@ public final class OnlineTimeMenu extends AbstractMenu implements Listener {
     Inventory inventory = Bukkit.createInventory(holder, 27, context.messages().parse(title));
     if (holder instanceof DetailHolder detail) detail.inventory = inventory;
     if (holder instanceof ConfirmHolder confirm) confirm.inventory = inventory;
-    for (int slot = 0; slot < inventory.getSize(); slot++) inventory.setItem(slot, filler());
+    for (int slot = 0; slot < inventory.getSize(); slot++) inventory.setItem(slot, DECORATION_ITEM);
     return inventory;
-  }
-
-  private ItemStack filler() {
-    return named(Material.GRAY_STAINED_GLASS_PANE, " ", List.of());
   }
 
   private void show(Player player, Inventory inventory) {
     player.openInventory(inventory);
     UiSound.OPEN.play(player);
-  }
-
-  public static String dhm(int seconds) {
-    int total = Math.max(0, seconds);
-    int days = total / 86_400;
-    int hours = total % 86_400 / 3_600;
-    int minutes = total % 3_600 / 60;
-    return days + "d " + hours + "h " + String.format(java.util.Locale.ROOT, "%02d", minutes) + "m";
-  }
-
-  public static String teamTime(int seconds) {
-    int total = Math.max(0, seconds);
-    return total / 86_400
-        + " Tage, "
-        + total % 86_400 / 3_600
-        + " Stunden, "
-        + total % 3_600 / 60
-        + " Minuten";
-  }
-
-  public static String full(int seconds) {
-    int total = Math.max(0, seconds);
-    int months = total / 2_592_000;
-    int rest = total % 2_592_000;
-    int days = rest / 86_400;
-    int hours = rest % 86_400 / 3_600;
-    int minutes = rest % 3_600 / 60;
-    if (months > 0)
-      return months
-          + " Monat(e) "
-          + days
-          + "d "
-          + hours
-          + "h "
-          + String.format(java.util.Locale.ROOT, "%02d", minutes)
-          + "m";
-    if (days > 0)
-      return days
-          + "d "
-          + hours
-          + "h "
-          + String.format(java.util.Locale.ROOT, "%02d", minutes)
-          + "m";
-    return hours + "h " + String.format(java.util.Locale.ROOT, "%02d", minutes) + "m";
-  }
-
-  public static String date(java.time.LocalDateTime date) {
-    return date == null ? "-" : DATE.format(date);
   }
 
   private record View(OnlineTimeRecord record, int active, int afk, int total) {}

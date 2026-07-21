@@ -107,7 +107,7 @@ public final class OnlineTimeRepository implements CacheRepository {
     return flush();
   }
 
-  /** Adds a player's delta to the next shared database batch. */
+
   public synchronized void queue(UUID uuid, String name, int activeSeconds, int afkSeconds) {
     int active = Math.max(0, activeSeconds);
     int afk = Math.max(0, afkSeconds);
@@ -134,7 +134,7 @@ public final class OnlineTimeRepository implements CacheRepository {
                 LocalDateTime.now()));
   }
 
-  /** Writes all queued player deltas with one prepared-statement batch and one connection. */
+
   public synchronized CompletableFuture<Boolean> flush() {
     if (pending.isEmpty()) return flushChain;
     Map<UUID, TimeUpdate> snapshot = pending;

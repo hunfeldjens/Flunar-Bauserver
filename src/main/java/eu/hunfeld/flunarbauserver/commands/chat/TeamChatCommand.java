@@ -10,7 +10,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-/** Teamchat, den ausschließlich Builder senden und empfangen können. */
+
 public final class TeamChatCommand extends BaseCommand {
   private static final String PERMISSION = "bauserver.builder";
 
