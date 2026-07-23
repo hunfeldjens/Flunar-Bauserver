@@ -2,7 +2,7 @@ package eu.hunfeld.flunarbauserver.gui;
 
 import eu.hunfeld.flunarbauserver.BauserverContext;
 import eu.hunfeld.flunarbauserver.utils.UiSound;
-import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -101,7 +101,7 @@ public final class BuilderServerMenu extends AbstractMenu implements Listener {
   }
 
   public List<String> available(Player player) {
-    return Arrays.stream(Destination.values())
+    return Destination.VALUES.stream()
         .filter(destination -> player.hasPermission(destination.permission))
         .map(destination -> destination.commandName)
         .toList();
@@ -137,7 +137,7 @@ public final class BuilderServerMenu extends AbstractMenu implements Listener {
       int slot,
       Destination destination) {
     if (!player.hasPermission(destination.permission)) return;
-    inventory.setItem(slot, named(destination.icon, destination.title, destination.lore));
+    inventory.setItem(slot, destination.item(context));
     destinations.put(slot, destination);
   }
 
@@ -223,6 +223,15 @@ public final class BuilderServerMenu extends AbstractMenu implements Listener {
         "<gold><bold>Kick-Historie",
         List.of("<gray>Zeigt alle gespeicherten Kicks."));
 
+    private static final List<Destination> VALUES = List.of(values());
+    private static final Map<String, Destination> BY_NAME =
+        VALUES.stream()
+            .collect(
+                java.util.stream.Collectors.toUnmodifiableMap(
+                    destination -> destination.commandName, destination -> destination));
+    private static final Map<Destination, ItemStack> ITEM_TEMPLATES =
+        new EnumMap<>(Destination.class);
+
     private final String commandName;
     private final String permission;
     private final Material icon;
@@ -239,11 +248,24 @@ public final class BuilderServerMenu extends AbstractMenu implements Listener {
     }
 
     private static Destination byName(String value) {
-      String normalized = value.toLowerCase(Locale.ROOT);
-      return Arrays.stream(values())
-          .filter(destination -> destination.commandName.equals(normalized))
-          .findFirst()
-          .orElse(null);
+      return BY_NAME.get(value.toLowerCase(Locale.ROOT));
+    }
+
+    private ItemStack item(BauserverContext context) {
+      ItemStack template;
+      synchronized (ITEM_TEMPLATES) {
+        template = ITEM_TEMPLATES.computeIfAbsent(this, ignored -> createItem(context));
+      }
+      return template.clone();
+    }
+
+    private ItemStack createItem(BauserverContext context) {
+      ItemStack item = new ItemStack(icon);
+      ItemMeta meta = item.getItemMeta();
+      meta.displayName(context.messages().parse(title));
+      if (!lore.isEmpty()) meta.lore(lore.stream().map(context.messages()::parse).toList());
+      item.setItemMeta(meta);
+      return item;
     }
   }
 
