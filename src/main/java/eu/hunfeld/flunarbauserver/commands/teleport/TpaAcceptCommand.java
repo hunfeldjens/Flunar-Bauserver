@@ -15,11 +15,12 @@ public final class TpaAcceptCommand extends BaseCommand {
   }
 
   @Override
+  @SuppressWarnings("resource")
   public boolean onCommand(
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String label,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     Player target = player(sender);
     if (target == null) return true;
     var requesterId = context.tpa().consume(target.getUniqueId());

@@ -36,7 +36,7 @@ public final class BlockDisplayService {
         direction = player.getEyeLocation().getDirection().normalize();
     BlockDisplay best = null;
     double distance = Double.MAX_VALUE;
-    for (Entity entity : player.getWorld().getEntitiesByClass(BlockDisplay.class)) {
+    for (BlockDisplay entity : player.getWorld().getEntitiesByClass(BlockDisplay.class)) {
       Vector center = entity.getLocation().add(.5, .5, .5).toVector(),
           to = center.clone().subtract(start);
       double forward = to.dot(direction);
@@ -44,7 +44,7 @@ public final class BlockDisplayService {
       double side = to.lengthSquared() - forward * forward;
       if (side <= .75 && forward < distance) {
         distance = forward;
-        best = (BlockDisplay) entity;
+        best = entity;
       }
     }
     return Optional.ofNullable(best);

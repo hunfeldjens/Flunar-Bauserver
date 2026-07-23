@@ -13,7 +13,7 @@ public final class BroadcastCommand extends BaseCommand {
   }
 
   public boolean onCommand(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     if (a.length == 0) {
       context.messages().send(s, "<gray>Benutzung: <green>/broadcast <Nachricht>");
       return true;

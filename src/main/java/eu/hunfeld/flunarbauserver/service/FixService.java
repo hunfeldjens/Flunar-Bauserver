@@ -32,7 +32,7 @@ public final class FixService {
   }
 
   public void set(Player player, int position) {
-    Selection selection = selections.computeIfAbsent(player.getUniqueId(), key -> new Selection());
+    Selection selection = selections.computeIfAbsent(player.getUniqueId(), _ -> new Selection());
     Location location = player.getLocation().subtract(0, 1, 0).getBlock().getLocation();
     if (position == 1) selection.first = location;
     else selection.second = location;
@@ -246,7 +246,7 @@ public final class FixService {
 
   private static final class Cursor {
     private final World world;
-    private final int minX, maxX, minY, maxY, minZ, maxZ;
+    private final int minX, maxX, maxY, minZ, maxZ;
     private int x, y, z;
     private boolean started, finished;
 
@@ -254,7 +254,6 @@ public final class FixService {
       world = w;
       minX = a;
       maxX = b;
-      minY = c;
       maxY = d;
       minZ = e;
       maxZ = f;

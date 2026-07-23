@@ -4,6 +4,7 @@ import eu.hunfeld.flunarbauserver.api.BauserverApi;
 import eu.hunfeld.flunarbauserver.api.DefaultBauserverApi;
 import eu.hunfeld.flunarbauserver.chat.TabListener;
 import eu.hunfeld.flunarbauserver.chat.TabService;
+import eu.hunfeld.flunarbauserver.chat.LuckPermsBridge;
 import eu.hunfeld.flunarbauserver.commands.CommandRegistry;
 import eu.hunfeld.flunarbauserver.commands.admin.*;
 import eu.hunfeld.flunarbauserver.commands.backup.BackupCommand;
@@ -118,7 +119,7 @@ public final class FlunarBauserver extends JavaPlugin {
     ProjectMenu projectMenu = new ProjectMenu(context);
     ProjectInfoMenu projectInfoMenu = new ProjectInfoMenu(context);
     FeatureMenu featureMenu = new FeatureMenu(context, featureService);
-    TabService tab = new TabService(this, messages);
+    TabService tab = new TabService(this, messages, settings.tabList());
     onlineTime = new OnlineTimeService(this, settings.onlineTime(), onlineTimes);
     OnlineTimeMenu onlineTimeMenu = new OnlineTimeMenu(context, onlineTime);
     ModerationHistoryMenu moderationHistoryMenu = new ModerationHistoryMenu(context);
@@ -320,6 +321,7 @@ public final class FlunarBauserver extends JavaPlugin {
 
   @Override
   public void onDisable() {
+    LuckPermsBridge.close();
     if (onlineTime != null) onlineTime.close();
     if (backups != null) backups.close();
     if (worldTransfers != null) worldTransfers.close();

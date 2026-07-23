@@ -17,7 +17,7 @@ public final class MainWorldCommand extends BaseCommand {
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String label,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     Player player = player(sender);
     if (player == null) return true;
     context.teleports().remember(player);

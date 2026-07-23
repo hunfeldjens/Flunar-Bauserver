@@ -21,7 +21,7 @@ public final class UnloadAllWorldsCommand extends BaseCommand {
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String label,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     World fallback = context.worlds().mainWorld();
     List<World> targets = new ArrayList<>(Bukkit.getWorlds());
     targets.remove(fallback);

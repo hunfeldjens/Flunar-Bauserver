@@ -16,10 +16,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("SpellCheckingInspection")
 public final class FeatureMenu extends AbstractMenu implements Listener {
   private static final Map<String, Material> ICONS = icons();
   private final FeatureService service;
@@ -113,7 +112,7 @@ public final class FeatureMenu extends AbstractMenu implements Listener {
         .features()
         .set(feature, active)
         .whenComplete(
-            (ok, error) ->
+            (ok, _) ->
                 Bukkit.getScheduler()
                     .runTask(
                         context.plugin(),
@@ -144,7 +143,7 @@ public final class FeatureMenu extends AbstractMenu implements Listener {
         .features()
         .setAll(values)
         .whenComplete(
-            (ok, error) ->
+            (ok, _) ->
                 Bukkit.getScheduler()
                     .runTask(
                         context.plugin(),

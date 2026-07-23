@@ -19,6 +19,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
@@ -106,7 +107,8 @@ public final class WorldService {
     player.getInventory().clear();
     player.getEnderChest().clear();
     player.setGameMode(GameMode.CREATIVE);
-    player.setHealth(player.getMaxHealth());
+    var maxHealth = player.getAttribute(Attribute.MAX_HEALTH);
+    player.setHealth(maxHealth == null ? 20.0D : maxHealth.getValue());
     player.setFoodLevel(20);
     player.setSaturation(20);
     for (PotionEffect effect : player.getActivePotionEffects())

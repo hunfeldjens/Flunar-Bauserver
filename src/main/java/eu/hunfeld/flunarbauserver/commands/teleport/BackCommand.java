@@ -13,11 +13,12 @@ public final class BackCommand extends BaseCommand {
   }
 
   @Override
+  @SuppressWarnings("resource")
   public boolean onCommand(
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String label,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     Player player = player(sender);
     if (player == null) return true;
     var target = context.teleports().backLocation(player);

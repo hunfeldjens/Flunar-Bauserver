@@ -5,6 +5,7 @@ import java.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+@SuppressWarnings("SpellCheckingInspection")
 final class ProjectBanSubcommand extends AbstractProjectSubcommand {
   ProjectBanSubcommand(BauserverContext c) {
     super(c);
@@ -33,7 +34,7 @@ final class ProjectBanSubcommand extends AbstractProjectSubcommand {
         .projectAccess()
         .setBan(target.getUniqueId(), world, true)
         .whenComplete(
-            (saved, error) ->
+            (saved, _) ->
                 Bukkit.getScheduler()
                     .runTask(
                         context.plugin(),

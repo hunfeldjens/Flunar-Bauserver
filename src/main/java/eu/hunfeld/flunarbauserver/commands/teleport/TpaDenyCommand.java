@@ -18,7 +18,7 @@ public final class TpaDenyCommand extends BaseCommand {
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String label,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     Player target = player(sender);
     if (target == null) return true;
     var requester = context.tpa().consume(target.getUniqueId());

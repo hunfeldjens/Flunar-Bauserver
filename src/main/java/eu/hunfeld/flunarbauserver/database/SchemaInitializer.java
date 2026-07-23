@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.util.List;
 
+@SuppressWarnings("SqlNoDataSourceInspection")
 public final class SchemaInitializer {
   private SchemaInitializer() {}
 

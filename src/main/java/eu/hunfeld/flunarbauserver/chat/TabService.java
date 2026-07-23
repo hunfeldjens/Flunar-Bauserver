@@ -1,6 +1,7 @@
 package eu.hunfeld.flunarbauserver.chat;
 
 import eu.hunfeld.flunarbauserver.FlunarBauserver;
+import eu.hunfeld.flunarbauserver.settings.Settings;
 import eu.hunfeld.flunarbauserver.utils.Messages;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -10,14 +11,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+@SuppressWarnings("SpellCheckingInspection")
 public final class TabService {
+  private static final LegacyComponentSerializer LEGACY_AMPERSAND =
+      LegacyComponentSerializer.legacyAmpersand();
+
   private final FlunarBauserver plugin;
   private final Messages messages;
-  private final LegacyComponentSerializer legacy = LegacyComponentSerializer.legacySection();
+  private final Settings.TabList tabList;
 
-  public TabService(FlunarBauserver plugin, Messages messages) {
+  public TabService(FlunarBauserver plugin, Messages messages, Settings.TabList tabList) {
     this.plugin = plugin;
     this.messages = messages;
+    this.tabList = tabList;
     LuckPermsBridge.subscribe(
         plugin,
         uuid ->
@@ -34,7 +40,7 @@ public final class TabService {
     String value = LuckPermsBridge.prefix(player);
     if (value == null) value = PlaceholderBridge.apply(player, "%luckperms_prefix%");
     if (value.equals("%luckperms_prefix%")) value = "";
-    return legacy.deserialize(org.bukkit.ChatColor.translateAlternateColorCodes('&', value));
+    return LEGACY_AMPERSAND.deserialize(value);
   }
 
   public void update(Player player) {
@@ -47,17 +53,8 @@ public final class TabService {
             : directWeight;
     player.setPlayerListOrder(Math.max(1, weight + 1));
     updateTeam(player, prefix, weight);
-    Component header =
-        messages.parse(
-            "\n<dark_gray><strikethrough>        </strikethrough> <bold><gradient:#1FADFF:#ABE0FF>Flunar.de</gradient></bold> <dark_gray><strikethrough>        </strikethrough>\n<white>Bauserver <dark_gray>• <gray>Online: <aqua>"
-                + Bukkit.getOnlinePlayers().size()
-                + "<dark_gray>/<aqua>"
-                + Bukkit.getMaxPlayers()
-                + "\n");
-    Component footer =
-        messages.parse(
-            "\n<dark_gray>Projektbau <white>• <aqua>Kreativität <white>• <gray>Teamwork\n<gray>Discord: <aqua>dc.flunar.de\n");
-    player.sendPlayerListHeaderAndFooter(header, footer);
+    player.sendPlayerListHeaderAndFooter(
+        messages.parse(tabText(tabList.header())), messages.parse(tabText(tabList.footer())));
   }
 
   public void updateAll() {
@@ -83,6 +80,12 @@ public final class TabService {
     } catch (NumberFormatException ignored) {
       return 0;
     }
+  }
+
+  private static String tabText(String value) {
+    return value
+        .replace("{online}", Integer.toString(Bukkit.getOnlinePlayers().size()))
+        .replace("{max_players}", Integer.toString(Bukkit.getMaxPlayers()));
   }
 
   private void updateTeam(Player player, Component prefix, int weight) {

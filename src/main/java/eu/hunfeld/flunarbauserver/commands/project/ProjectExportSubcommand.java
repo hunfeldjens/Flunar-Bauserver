@@ -15,6 +15,7 @@ final class ProjectExportSubcommand extends AbstractProjectSubcommand {
     super(c);
   }
 
+  @SuppressWarnings("resource")
   public void execute(Player p, String[] a) {
     if (!require(p, "bauserver.admin")) return;
     if (a.length < 3) {

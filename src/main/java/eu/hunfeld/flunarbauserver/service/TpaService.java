@@ -41,15 +41,6 @@ public final class TpaService {
     return Optional.of(request.requester());
   }
 
-  public boolean hasPending(UUID requester, UUID target) {
-    Request request = requestsByTarget.get(target);
-    if (request == null || request.expiresAt().isBefore(Instant.now())) {
-      requestsByTarget.remove(target);
-      return false;
-    }
-    return request.requester().equals(requester);
-  }
-
   public void clear(UUID player) {
     requestsByTarget.remove(player);
     requestsByTarget.entrySet().removeIf(entry -> entry.getValue().requester().equals(player));

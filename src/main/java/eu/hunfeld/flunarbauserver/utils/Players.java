@@ -8,10 +8,6 @@ import org.bukkit.entity.Player;
 public final class Players {
   private Players() {}
 
-  public static Optional<Player> onlineExact(String name) {
-    return Optional.ofNullable(Bukkit.getPlayerExact(name));
-  }
-
   public static Optional<OfflinePlayer> known(String name) {
     Player online = Bukkit.getPlayerExact(name);
     if (online != null) return Optional.of(online);

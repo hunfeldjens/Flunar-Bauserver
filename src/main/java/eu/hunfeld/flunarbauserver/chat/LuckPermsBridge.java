@@ -1,9 +1,12 @@
 package eu.hunfeld.flunarbauserver.chat;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.OptionalInt;
 import java.util.UUID;
 import java.util.function.Consumer;
 import net.luckperms.api.LuckPerms;
+import net.luckperms.api.event.EventSubscription;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.platform.PlayerAdapter;
@@ -14,6 +17,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 
 
 public final class LuckPermsBridge {
+  private static final List<EventSubscription<?>> SUBSCRIPTIONS = new ArrayList<>();
   private static volatile Provider provider;
 
   private LuckPermsBridge() {}
@@ -30,7 +34,18 @@ public final class LuckPermsBridge {
 
   public static void subscribe(Plugin plugin, Consumer<UUID> refresh) {
     Provider active = provider();
-    if (active != null) active.subscribe(plugin, refresh);
+    if (active == null) return;
+    synchronized (SUBSCRIPTIONS) {
+      SUBSCRIPTIONS.add(active.subscribe(plugin, refresh));
+    }
+  }
+
+  public static void close() {
+    synchronized (SUBSCRIPTIONS) {
+      SUBSCRIPTIONS.forEach(EventSubscription::close);
+      SUBSCRIPTIONS.clear();
+    }
+    provider = null;
   }
 
   private static Provider provider() {
@@ -48,16 +63,10 @@ public final class LuckPermsBridge {
 
     int highestGroupWeight(Player player);
 
-    void subscribe(Plugin plugin, Consumer<UUID> refresh);
+    EventSubscription<?> subscribe(Plugin plugin, Consumer<UUID> refresh);
   }
 
-  private static final class ApiProvider implements Provider {
-    private final LuckPerms api;
-
-    private ApiProvider(LuckPerms api) {
-      this.api = api;
-    }
-
+  private record ApiProvider(LuckPerms api) implements Provider {
     private static Provider create() {
       RegisteredServiceProvider<LuckPerms> registration =
           Bukkit.getServicesManager().getRegistration(LuckPerms.class);
@@ -83,8 +92,8 @@ public final class LuckPermsBridge {
     }
 
     @Override
-    public void subscribe(Plugin plugin, Consumer<UUID> refresh) {
-      api.getEventBus()
+    public EventSubscription<?> subscribe(Plugin plugin, Consumer<UUID> refresh) {
+      return api.getEventBus()
           .subscribe(
               plugin,
               net.luckperms.api.event.user.UserDataRecalculateEvent.class,

@@ -17,7 +17,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 
@@ -123,7 +122,7 @@ public final class ModerationHistoryMenu extends AbstractMenu implements Listene
     lore.add("<gray>Von: <green>" + record.byName());
     lore.add("");
     lore.add("<gray>Grund:");
-    lore.addAll(wrap(record.reason(), "<white>"));
+    lore.addAll(wrap(record.reason()));
     if (type == Type.BAN) {
       lore.add("");
       lore.add(record.active() ? "<red>● Ban ist noch aktiv" : "<green>● Ban wurde aufgehoben");
@@ -142,20 +141,20 @@ public final class ModerationHistoryMenu extends AbstractMenu implements Listene
     return record.createdAt() == null ? "Unbekannt" : DATE.format(record.createdAt());
   }
 
-  private static List<String> wrap(String text, String prefix) {
+  private static List<String> wrap(String text) {
     String[] words = text.strip().split("\\s+");
     List<String> lines = new ArrayList<>();
     StringBuilder line = new StringBuilder();
     for (String word : words) {
       if (!line.isEmpty() && line.length() + word.length() + 1 > 38) {
-        lines.add(prefix + line);
+        lines.add("<white>" + line);
         line.setLength(0);
       }
       if (!line.isEmpty()) line.append(' ');
       line.append(word);
     }
-    if (!line.isEmpty()) lines.add(prefix + line);
-    return lines.isEmpty() ? List.of(prefix + "Kein Grund angegeben") : lines;
+    if (!line.isEmpty()) lines.add("<white>" + line);
+    return lines.isEmpty() ? List.of("<white>Kein Grund angegeben") : lines;
   }
 
   public enum Type {

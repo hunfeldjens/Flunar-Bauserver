@@ -36,7 +36,7 @@ public final class OnlineTimeCommand extends BaseCommand {
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String label,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     if (!requireDatabase(sender)) return true;
     if (args.length == 0) {
       if (!(sender instanceof Player player)) {
@@ -239,7 +239,7 @@ public final class OnlineTimeCommand extends BaseCommand {
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String alias,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     if (args.length == 1 && sender.hasPermission("bauserver.admin"))
       return filter(List.of("reset", "export"), args[0]);
     if (args.length == 2

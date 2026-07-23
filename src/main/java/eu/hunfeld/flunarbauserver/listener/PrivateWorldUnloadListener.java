@@ -40,7 +40,7 @@ public final class PrivateWorldUnloadListener implements Listener {
   }
 
   private void queueWhenEmpty(World world) {
-    if (!isPrivate(world)) return;
+    if (isRegularWorld(world)) return;
     Bukkit.getScheduler()
         .runTask(
             plugin,
@@ -69,12 +69,12 @@ public final class PrivateWorldUnloadListener implements Listener {
   }
 
   private void cancel(World world) {
-    if (!isPrivate(world)) return;
+    if (isRegularWorld(world)) return;
     BukkitTask task = pending.remove(world.getKey());
     if (task != null) task.cancel();
   }
 
-  private static boolean isPrivate(World world) {
-    return world.getKey().namespace().equals("privat");
+  private static boolean isRegularWorld(World world) {
+    return !world.getKey().namespace().equals("privat");
   }
 }

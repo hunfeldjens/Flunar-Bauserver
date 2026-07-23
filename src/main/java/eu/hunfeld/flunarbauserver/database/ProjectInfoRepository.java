@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
+@SuppressWarnings("SqlNoDataSourceInspection")
 public final class ProjectInfoRepository implements CacheRepository {
   private final DatabaseManager database;
   private final Map<Integer, ProjectInfo> infos = new ConcurrentHashMap<>();

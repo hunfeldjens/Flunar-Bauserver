@@ -27,7 +27,7 @@ public final class ReplyCommand extends BaseCommand {
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String label,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     Player player = player(sender);
     if (player == null) return true;
     if (args.length == 0) {

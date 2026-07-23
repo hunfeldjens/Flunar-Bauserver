@@ -18,6 +18,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
+@SuppressWarnings("SqlNoDataSourceInspection")
 public final class ModerationRepository implements CacheRepository {
   private final DatabaseManager database;
   private final Map<UUID, ActiveBan> activeBans = new ConcurrentHashMap<>();

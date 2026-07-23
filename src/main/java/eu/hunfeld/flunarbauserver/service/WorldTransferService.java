@@ -85,6 +85,7 @@ public final class WorldTransferService implements AutoCloseable {
         executor);
   }
 
+  @SuppressWarnings("resource")
   private int run(Path script, String worldPath, String exportName) {
     ProcessBuilder builder =
         new ProcessBuilder("/bin/bash", script.toString(), worldPath, exportName);

@@ -13,14 +13,14 @@ public final class InventorySeeCommand extends BaseCommand {
   }
 
   public boolean onCommand(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     Player p = player(s);
     if (p == null) return true;
     if (a.length == 0) {
       context.messages().send(p, "<red>Bitte gib einen Spieler an.");
       return true;
     }
-    Player t = a.length > 0 ? Bukkit.getPlayerExact(a[0]) : null;
+    Player t = Bukkit.getPlayerExact(a[0]);
     if (t == null) context.messages().send(p, "<red>Spieler nicht online.");
     else if (t == p)
       context.messages().send(p, "<red>Du kannst dein eigenes Inventar nicht öffnen.");
@@ -33,7 +33,7 @@ public final class InventorySeeCommand extends BaseCommand {
 
   @Override
   public java.util.List<String> onTabComplete(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     return a.length == 1
         ? Bukkit.getOnlinePlayers().stream().map(Player::getName).toList()
         : java.util.List.of();

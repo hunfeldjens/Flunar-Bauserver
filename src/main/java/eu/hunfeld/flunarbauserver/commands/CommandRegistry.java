@@ -15,8 +15,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
-
+@SuppressWarnings("SpellCheckingInspection")
 public final class CommandRegistry {
   private final FlunarBauserver plugin;
   private final YamlConfiguration definitions;
@@ -39,7 +40,7 @@ public final class CommandRegistry {
         new Command(name, description, "/" + name, aliases) {
           @Override
           public boolean execute(
-              @NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
+              @NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String @NotNull [] args) {
             return handler.onCommand(sender, this, commandLabel, args);
           }
         };
@@ -47,12 +48,14 @@ public final class CommandRegistry {
     BasicCommand paperCommand =
         new BasicCommand() {
           @Override
-          public void execute(CommandSourceStack source, String[] args) {
+          public void execute(
+              @NonNull CommandSourceStack source, @NonNull String @NonNull [] args) {
             handler.onCommand(source.getSender(), bridge, name, args);
           }
 
           @Override
-          public Collection<String> suggest(CommandSourceStack source, String[] args) {
+          public @NonNull Collection<String> suggest(
+              @NonNull CommandSourceStack source, @NonNull String @NonNull [] args) {
             String[] normalizedArgs = args.length == 0 ? new String[] {""} : args;
             List<String> suggestions =
                 handler.onTabComplete(source.getSender(), bridge, name, normalizedArgs);

@@ -17,7 +17,4 @@ public final class PrivateMessageService {
     return Optional.ofNullable(replyTargets.get(player));
   }
 
-  public void forget(UUID player) {
-    replyTargets.remove(player);
-  }
 }

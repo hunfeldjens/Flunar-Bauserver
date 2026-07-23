@@ -72,15 +72,15 @@ final class ProjectJoinSubcommand extends AbstractProjectSubcommand {
     if (args.length != 2) return List.of();
     return filter(
         context.projects().all().stream()
+            .map(Project::worldName)
             .filter(
-                project ->
+                world ->
                     context
                         .projectAccess()
                         .mayEnter(
                             player.getUniqueId(),
-                            project.worldName(),
+                            world,
                             player.hasPermission("bauserver.admin")))
-            .map(Project::worldName)
             .toList(),
         args[1]);
   }

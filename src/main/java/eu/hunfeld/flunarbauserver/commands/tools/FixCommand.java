@@ -18,7 +18,7 @@ public final class FixCommand extends BaseCommand {
   }
 
   public boolean onCommand(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     Player p = player(s);
     if (p == null) return true;
     if (a.length == 0) fix.execute(p);
@@ -39,7 +39,7 @@ public final class FixCommand extends BaseCommand {
   }
 
   public List<String> onTabComplete(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     return a.length == 1 ? List.of("1", "2", "undo", "clear") : List.of();
   }
 

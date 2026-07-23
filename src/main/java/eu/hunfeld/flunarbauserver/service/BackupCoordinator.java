@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
+@SuppressWarnings("resource")
 public final class BackupCoordinator {
   private final BauserverContext context;
   private BukkitTask countdown;
@@ -18,7 +19,7 @@ public final class BackupCoordinator {
   }
 
   public void start(CommandSender sender, boolean safe) {
-    if (!context.backups().reserve(safe)) {
+    if (!context.backups().tryReserve(safe)) {
       context.messages().send(sender, "<red>Ein Backup läuft bereits.");
       return;
     }

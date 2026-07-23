@@ -21,7 +21,7 @@ public final class ToolsCommand extends BaseCommand {
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String label,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     Player player = player(sender);
     if (player != null) menu.open(player);
     return true;

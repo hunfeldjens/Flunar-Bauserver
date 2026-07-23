@@ -3,6 +3,16 @@ server:
   prefix: "<bold><gradient:#1FADFF:#ABE0FF>Flunar</gradient></bold> <white><bold>»</bold></white>"
   main-world: "world"
   access-permission: "bauserver.access"
+  tab-header: |-
+
+    <dark_gray><strikethrough>        </strikethrough> <bold><gradient:#1FADFF:#ABE0FF>Flunar.de</gradient></bold> <dark_gray><strikethrough>        </strikethrough>
+    <white>Bauserver <dark_gray>• <gray>Online: <aqua>{online}<dark_gray>/<aqua>{max_players}
+
+  tab-footer: |-
+
+    <dark_gray>Projektbau <white>• <aqua>Kreativität <white>• <gray>Teamwork
+    <gray>Discord: <aqua>dc.flunar.de
+
 
 messages:
   # Einheitliche Meldung, z. B. bei /fly <Spieler> und /gm <Modus> <Spieler>.

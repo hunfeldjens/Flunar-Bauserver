@@ -18,7 +18,7 @@ public final class WeatherTimeCommands extends BaseCommand {
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String label,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     Player player = player(sender);
     if (player == null) return true;
     String message;

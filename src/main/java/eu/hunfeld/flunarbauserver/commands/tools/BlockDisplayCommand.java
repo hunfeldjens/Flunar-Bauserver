@@ -22,7 +22,7 @@ public final class BlockDisplayCommand extends BaseCommand {
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String label,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     Player p = player(sender);
     if (p == null) return true;
     if (args.length == 0 || args[0].equalsIgnoreCase("help") || args[0].equals("?")) {
@@ -155,7 +155,7 @@ public final class BlockDisplayCommand extends BaseCommand {
   }
 
   public List<String> onTabComplete(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     if (a.length == 1)
       return List.of(
           "create", "select", "block", "move", "scale", "rotate", "glow", "info", "remove", "help");

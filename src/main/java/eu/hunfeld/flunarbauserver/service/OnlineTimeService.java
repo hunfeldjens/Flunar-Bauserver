@@ -82,7 +82,7 @@ public final class OnlineTimeService implements AutoCloseable {
     for (Player player : Bukkit.getOnlinePlayers()) {
       Session session =
           sessions.computeIfAbsent(
-              player.getUniqueId(), key -> new Session(player.getLocation(), now));
+              player.getUniqueId(), _ -> new Session(player.getLocation(), now));
       Location current = player.getLocation();
       double movement =
           Math.abs(current.x() - session.lastLocation.x())

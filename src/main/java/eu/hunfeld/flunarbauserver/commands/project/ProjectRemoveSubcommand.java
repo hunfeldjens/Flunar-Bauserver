@@ -31,7 +31,7 @@ final class ProjectRemoveSubcommand extends AbstractProjectSubcommand {
         .projects()
         .delete(project.name())
         .whenComplete(
-            (ok, error) ->
+            (ok, _) ->
                 Bukkit.getScheduler()
                     .runTask(
                         context.plugin(),

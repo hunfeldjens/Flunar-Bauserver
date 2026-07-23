@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
+@SuppressWarnings({"SqlNoDataSourceInspection", "SpellCheckingInspection"})
 public final class FeatureRepository implements CacheRepository {
   public static final List<String> NAMES =
       List.of(

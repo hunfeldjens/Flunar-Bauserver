@@ -41,7 +41,7 @@ public final class TabListener implements Listener {
   public void chat(AsyncChatEvent e) {
     Component prefix = tab.prefix(e.getPlayer());
     e.renderer(
-        (source, sourceDisplayName, message, viewer) ->
+        (source, _, message, _) ->
             prefix
                 .append(Component.text(source.getName()))
                 .append(Component.text(": "))

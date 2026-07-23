@@ -18,11 +18,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 
 
+@SuppressWarnings("SpellCheckingInspection")
 public final class OnlineTimeMenu extends AbstractMenu implements Listener {
   private static final int PAGE_SIZE = 45;
   private final OnlineTimeService service;

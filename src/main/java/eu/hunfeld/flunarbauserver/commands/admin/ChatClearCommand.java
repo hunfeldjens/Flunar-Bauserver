@@ -12,7 +12,7 @@ public final class ChatClearCommand extends BaseCommand {
   }
 
   public boolean onCommand(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     for (int i = 0; i < 800; i++)
       Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(" "));
     Bukkit.getOnlinePlayers()

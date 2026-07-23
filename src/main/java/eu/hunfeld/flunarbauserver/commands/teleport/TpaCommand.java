@@ -16,11 +16,12 @@ public final class TpaCommand extends BaseCommand {
   }
 
   @Override
+  @SuppressWarnings("resource")
   public boolean onCommand(
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String label,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     Player player = player(sender);
     if (player == null) return true;
     if (args.length < 1) {
@@ -48,7 +49,7 @@ public final class TpaCommand extends BaseCommand {
     }
     context
         .messages()
-        .send(target, "<green>" + player.getName() + " <gray>möchte sich zu dir teleporten.");
+        .send(target, "<green>" + player.getName() + " <gray>möchte sich zu dir teleportieren.");
     context
         .messages()
         .raw(
@@ -86,7 +87,7 @@ public final class TpaCommand extends BaseCommand {
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String alias,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     if (args.length != 1) return List.of();
     String input = args[0].toLowerCase(Locale.ROOT);
     return Bukkit.getOnlinePlayers().stream()

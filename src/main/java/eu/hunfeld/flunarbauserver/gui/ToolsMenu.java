@@ -27,6 +27,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 
+@SuppressWarnings("SpellCheckingInspection")
 public final class ToolsMenu extends AbstractMenu implements Listener {
   private final NamespacedKey pistonToolKey;
   private static final String FIXED_MINECART_TAG = "flunar_fixed_minecart";
@@ -39,7 +40,7 @@ public final class ToolsMenu extends AbstractMenu implements Listener {
   public void open(Player player) {
     MenuHolder holder = new MenuHolder(MenuType.MAIN);
     Inventory inventory =
-        create(holder, 45, "<gold><bold>Operator Items", Material.GRAY_STAINED_GLASS_PANE);
+        create(holder, 45, "<gold><bold>Operator Items");
     inventory.setItem(10, named(Material.BARRIER, "<red><bold>Barriere"));
     inventory.setItem(
         11,
@@ -97,7 +98,7 @@ public final class ToolsMenu extends AbstractMenu implements Listener {
   private void openLights(Player player) {
     MenuHolder holder = new MenuHolder(MenuType.LIGHTS);
     Inventory inventory =
-        create(holder, 18, "<yellow><bold>Licht-Stufen", Material.GRAY_STAINED_GLASS_PANE);
+        create(holder, 18, "<yellow><bold>Licht-Stufen");
     for (int level = 0; level <= 15; level++) {
       inventory.setItem(
           level,
@@ -113,7 +114,7 @@ public final class ToolsMenu extends AbstractMenu implements Listener {
   private void openCommandBlocks(Player player) {
     MenuHolder holder = new MenuHolder(MenuType.COMMAND_BLOCKS);
     Inventory inventory =
-        create(holder, 27, "<gold><bold>Commandblock-Items", Material.GRAY_STAINED_GLASS_PANE);
+        create(holder, 27, "<gold><bold>Commandblock-Items");
     inventory.setItem(10, named(Material.COMMAND_BLOCK, "<gold><bold>Command-Block"));
     inventory.setItem(12, named(Material.CHAIN_COMMAND_BLOCK, "<green><bold>Ketten-CMD-Block"));
     inventory.setItem(14, named(Material.REPEATING_COMMAND_BLOCK, "<blue><bold>Repeat-CMD-Block"));
@@ -125,7 +126,7 @@ public final class ToolsMenu extends AbstractMenu implements Listener {
   private void openMinecarts(Player player) {
     MenuHolder holder = new MenuHolder(MenuType.MINECARTS);
     Inventory inventory =
-        create(holder, 27, "<gray><bold>Minecart-Items", Material.GRAY_STAINED_GLASS_PANE);
+        create(holder, 27, "<gray><bold>Minecart-Items");
     inventory.setItem(
         10,
         named(
@@ -314,10 +315,10 @@ public final class ToolsMenu extends AbstractMenu implements Listener {
       minecart.teleport(event.getFrom());
   }
 
-  private Inventory create(MenuHolder holder, int size, String title, Material backgroundMaterial) {
+  private Inventory create(MenuHolder holder, int size, String title) {
     Inventory inventory = Bukkit.createInventory(holder, size, context.messages().parse(title));
     holder.inventory = inventory;
-    ItemStack background = named(backgroundMaterial, " ");
+    ItemStack background = DECORATION_ITEM;
     for (int slot = 0; slot < size; slot++) inventory.setItem(slot, background);
     return inventory;
   }

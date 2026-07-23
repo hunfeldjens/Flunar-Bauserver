@@ -13,6 +13,7 @@ public record Settings(
     String prefix,
     String mainWorld,
     String accessPermission,
+    TabList tabList,
     Spawn spawn,
     Paths paths,
     OnlineTime onlineTime,
@@ -50,6 +51,14 @@ public record Settings(
         new Messages(
             config.getString(
                 "messages.player-not-online", "<red>Dieser Spieler ist nicht online."));
+    TabList tabList =
+        new TabList(
+            config.getString(
+                "server.tab-header",
+                "\n<dark_gray><strikethrough>        </strikethrough> <bold><gradient:#1FADFF:#ABE0FF>Flunar.de</gradient></bold> <dark_gray><strikethrough>        </strikethrough>\n<white>Bauserver <dark_gray>• <gray>Online: <aqua>{online}<dark_gray>/<aqua>{max_players}\n"),
+            config.getString(
+                "server.tab-footer",
+                "\n<dark_gray>Projektbau <white>• <aqua>Kreativität <white>• <gray>Teamwork\n<gray>Discord: <aqua>dc.flunar.de\n"));
     Map<String, String> templates = new LinkedHashMap<>();
     ConfigurationSection templateSection = config.getConfigurationSection("templates");
     if (templateSection != null) {
@@ -73,6 +82,7 @@ public record Settings(
         config.getString("server.prefix", "<bold>Flunar</bold> <white>»</white>"),
         config.getString("server.main-world", "world"),
         config.getString("server.access-permission", "bauserver.access"),
+        tabList,
         spawn,
         paths,
         online,
@@ -103,4 +113,6 @@ public record Settings(
       double movementThreshold) {}
 
   public record Messages(String playerNotOnline) {}
+
+  public record TabList(String header, String footer) {}
 }

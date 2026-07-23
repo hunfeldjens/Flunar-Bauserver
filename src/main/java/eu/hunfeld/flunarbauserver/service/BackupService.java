@@ -39,11 +39,11 @@ public final class BackupService implements AutoCloseable {
   }
 
   public CompletableFuture<Integer> start(boolean safe) {
-    if (!reserve(safe)) return CompletableFuture.completedFuture(Integer.MIN_VALUE);
+    if (!tryReserve(safe)) return CompletableFuture.completedFuture(Integer.MIN_VALUE);
     return executeReserved();
   }
 
-  public boolean reserve(boolean safe) {
+  public boolean tryReserve(boolean safe) {
     if (!running.compareAndSet(false, true)) return false;
     reservedSafe = safe;
     safeWorldLock.set(safe);
@@ -55,7 +55,7 @@ public final class BackupService implements AutoCloseable {
     return CompletableFuture.supplyAsync(
             () -> runScript(settings.paths().backupScript(), reservedSafe), executor)
         .whenComplete(
-            (result, error) -> {
+            (_, _) -> {
               safeWorldLock.set(false);
               running.set(false);
             });

@@ -25,7 +25,7 @@ public final class ServerRestartCommand extends BaseCommand {
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String label,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     if (running) {
       context.messages().send(sender, "<red>Es läuft bereits ein Restart-Countdown.");
       return true;

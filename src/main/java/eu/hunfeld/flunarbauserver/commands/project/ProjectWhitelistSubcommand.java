@@ -41,7 +41,7 @@ final class ProjectWhitelistSubcommand extends AbstractProjectSubcommand {
           .projects()
           .setWhitelistActive(world, active)
           .whenComplete(
-              (ok, error) ->
+              (ok, _) ->
                   Bukkit.getScheduler()
                       .runTask(
                           context.plugin(),
@@ -108,7 +108,7 @@ final class ProjectWhitelistSubcommand extends AbstractProjectSubcommand {
         .projectAccess()
         .setWhitelist(target.getUniqueId(), world, add)
         .whenComplete(
-            (ok, error) ->
+            (ok, _) ->
                 Bukkit.getScheduler()
                     .runTask(
                         context.plugin(),

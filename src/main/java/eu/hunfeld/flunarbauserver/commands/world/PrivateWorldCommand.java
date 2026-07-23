@@ -15,11 +15,12 @@ public final class PrivateWorldCommand extends BaseCommand {
   }
 
   @Override
+  @SuppressWarnings("resource")
   public boolean onCommand(
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String label,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     Player player = player(sender);
     if (player == null || !requireDatabase(player)) return true;
     String worldName =

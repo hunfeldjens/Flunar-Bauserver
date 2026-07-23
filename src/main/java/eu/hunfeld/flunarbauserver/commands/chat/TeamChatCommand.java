@@ -23,7 +23,7 @@ public final class TeamChatCommand extends BaseCommand {
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String label,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     if (args.length == 0) {
       context.messages().send(sender, "<gray>Benutzung: <green>/tc <Nachricht>");
       return true;

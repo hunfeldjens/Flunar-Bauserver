@@ -12,7 +12,7 @@ public final class PersonalChatClearCommand extends BaseCommand {
   }
 
   public boolean onCommand(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     Player p = player(s);
     if (p != null) {
       for (int i = 0; i < 300; i++) p.sendMessage(" ");

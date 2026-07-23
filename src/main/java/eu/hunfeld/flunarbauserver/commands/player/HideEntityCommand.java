@@ -13,7 +13,7 @@ public final class HideEntityCommand extends BaseCommand {
   }
 
   public boolean onCommand(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     Player p = player(s);
     if (p == null) return true;
     RayTraceResult r =
@@ -25,16 +25,20 @@ public final class HideEntityCommand extends BaseCommand {
       context.messages().send(p, "<gray>Du schaust <red>keine <gray>Entity an.");
       return true;
     }
-    if (e instanceof Player) {
-      context.messages().send(p, "<gray>Spieler können <red>nicht <gray>verändert werden.");
-      return true;
+    switch (e) {
+      case Player _ -> {
+        context.messages().send(p, "<gray>Spieler können <red>nicht <gray>verändert werden.");
+        return true;
+      }
+      case Animals _ -> {
+        context.messages().send(p, "<gray>Tiere können <red>nicht <gray>verändert werden.");
+        return true;
+      }
+      default -> {
+        e.setVisibleByDefault(false);
+        context.messages().action(p, "<gray>Entity → <red>unsichtbar");
+      }
     }
-    if (e instanceof Animals) {
-      context.messages().send(p, "<gray>Tiere können <red>nicht <gray>verändert werden.");
-      return true;
-    }
-    e.setVisibleByDefault(false);
-    context.messages().action(p, "<gray>Entity → <red>unsichtbar");
     return true;
   }
 }

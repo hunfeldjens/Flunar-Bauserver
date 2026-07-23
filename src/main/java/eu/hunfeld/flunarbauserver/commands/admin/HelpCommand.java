@@ -20,7 +20,7 @@ public final class HelpCommand extends BaseCommand {
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String label,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     Player player = player(sender);
     if (player == null) return true;
     String category = args.length == 0 ? "" : args[0].toLowerCase(Locale.ROOT);
@@ -230,7 +230,7 @@ public final class HelpCommand extends BaseCommand {
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String alias,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     if (args.length != 1 || !(sender instanceof Player player)) return List.of();
     List<String> categories = new ArrayList<>(List.of("world", "player", "team", "mod"));
     if (player.hasPermission("bauserver.builder")) categories.addAll(List.of("projekt", "tools"));

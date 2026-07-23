@@ -13,7 +13,7 @@ public final class PlayerInfoCommand extends BaseCommand {
   }
 
   public boolean onCommand(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     Player t = a.length > 0 ? Bukkit.getPlayerExact(a[0]) : s instanceof Player p ? p : null;
     if (t == null) {
       context.messages().send(s, "<red>Spieler nicht online.");
@@ -46,7 +46,7 @@ public final class PlayerInfoCommand extends BaseCommand {
 
   @Override
   public java.util.List<String> onTabComplete(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     return a.length == 1
         ? Bukkit.getOnlinePlayers().stream().map(Player::getName).toList()
         : java.util.List.of();

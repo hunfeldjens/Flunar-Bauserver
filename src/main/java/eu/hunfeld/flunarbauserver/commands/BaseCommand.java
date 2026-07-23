@@ -3,7 +3,6 @@ package eu.hunfeld.flunarbauserver.commands;
 import eu.hunfeld.flunarbauserver.BauserverContext;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -32,6 +31,7 @@ public abstract class BaseCommand implements CommandExecutor, TabCompleter {
     return false;
   }
 
+  @SuppressWarnings("resource")
   protected boolean requireDatabase(CommandSender sender) {
     if (context.database().isReady()) return true;
     context
@@ -57,23 +57,12 @@ public abstract class BaseCommand implements CommandExecutor, TabCompleter {
                     }));
   }
 
-  protected <T> void onMain(CompletableFuture<T> future, Consumer<T> success) {
-    future.whenComplete(
-        (result, error) ->
-            Bukkit.getScheduler()
-                .runTask(
-                    context.plugin(),
-                    () -> {
-                      if (error == null) success.accept(result);
-                    }));
-  }
-
   @Override
   public @Nullable List<String> onTabComplete(
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String alias,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     return List.of();
   }
 }

@@ -24,7 +24,7 @@ public final class BauserverMenuCommand extends BaseCommand {
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String label,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     Player player = player(sender);
     if (player == null) return true;
     if (args.length == 0) {
@@ -49,7 +49,7 @@ public final class BauserverMenuCommand extends BaseCommand {
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String alias,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     if (!(sender instanceof Player player) || args.length != 1) return List.of();
     List<String> options = new ArrayList<>();
     options.add("menu");

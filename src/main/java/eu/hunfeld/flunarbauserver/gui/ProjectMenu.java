@@ -19,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings({"resource", "SpellCheckingInspection"})
 public final class ProjectMenu extends AbstractMenu implements Listener {
   private static final int PAGE_SIZE = 18;
   private static final Pattern HEX_COLOR_PATTERN = Pattern.compile("[0-9a-fA-F]{6}");
@@ -78,9 +79,8 @@ public final class ProjectMenu extends AbstractMenu implements Listener {
               .map(Bukkit::getOfflinePlayer)
               .map(
                   offline ->
-                      offline.getName() == null
-                          ? offline.getUniqueId().toString()
-                          : offline.getName())
+                      java.util.Objects.requireNonNullElse(
+                          offline.getName(), offline.getUniqueId().toString()))
               .sorted(String.CASE_INSENSITIVE_ORDER)
               .toList();
       if (!names.isEmpty()) {
@@ -181,7 +181,7 @@ public final class ProjectMenu extends AbstractMenu implements Listener {
         .mayEnter(
             player.getUniqueId(),
             project.worldName(),
-            holder.admin || player.hasPermission("bauserver.admin"))) {
+            player.hasPermission("bauserver.admin"))) {
       context.messages().send(player, "<red>Du hast keinen Zugriff auf dieses Projekt.");
       UiSound.ERROR.play(player);
       return;
@@ -266,7 +266,7 @@ public final class ProjectMenu extends AbstractMenu implements Listener {
           .autoload()
           .set(project.worldName(), active)
           .whenComplete(
-              (ok, error) ->
+              (ok, _) ->
                   Bukkit.getScheduler()
                       .runTask(
                           context.plugin(),
@@ -347,7 +347,7 @@ public final class ProjectMenu extends AbstractMenu implements Listener {
           .projects()
           .setWhitelistActive(project.worldName(), active)
           .whenComplete(
-              (ok, error) ->
+              (ok, _) ->
                   Bukkit.getScheduler()
                       .runTask(
                           context.plugin(),
@@ -357,7 +357,7 @@ public final class ProjectMenu extends AbstractMenu implements Listener {
                                   context
                                       .projects()
                                       .byWorld(project.worldName())
-                                      .map(value -> value.whitelistActive())
+                                      .map(Project::whitelistActive)
                                       .orElse(!active);
                               if (current == active) {
                                 context
@@ -431,7 +431,7 @@ public final class ProjectMenu extends AbstractMenu implements Listener {
           .projects()
           .delete(holder.project.name())
           .whenComplete(
-              (ok, error) ->
+              (ok, _) ->
                   Bukkit.getScheduler()
                       .runTask(
                           context.plugin(),
@@ -542,18 +542,6 @@ public final class ProjectMenu extends AbstractMenu implements Listener {
     }
   }
 
-  private static List<String> wrap(String text, String prefix) {
-    if (text == null || text.isBlank()) return List.of(prefix);
-    String[] words = text.strip().split("\\s+");
-    List<String> lines = new ArrayList<>();
-    for (int start = 0; start < words.length; start += 6) {
-      int end = Math.min(words.length, start + 6);
-      lines.add(prefix + String.join(" ", java.util.Arrays.copyOfRange(words, start, end)));
-    }
-    return lines;
-  }
-
-
   private static List<String> wrapLegacy(String text) {
     if (text == null || text.isBlank()) return List.of("&7");
     String[] words = text.strip().split("\\s+");
@@ -588,7 +576,7 @@ public final class ProjectMenu extends AbstractMenu implements Listener {
         index++;
       } else if ("klmno".indexOf(code) >= 0) {
         String format = "&" + code;
-        if (!active.contains(format)) active += format;
+        if (!active.contains(format)) active = active.concat(format);
         index++;
       } else if (code == 'r') {
         active = "&7";

@@ -10,6 +10,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
+@SuppressWarnings("SqlNoDataSourceInspection")
 public final class ProjectAccessRepository implements CacheRepository {
   private final DatabaseManager database;
   private final ProjectRepository projects;

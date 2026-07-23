@@ -12,7 +12,7 @@ public final class VanishCommand extends BaseCommand {
   }
 
   public boolean onCommand(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     Player p = player(s);
     if (p != null) {
       boolean v = context.vanish().toggle(p);

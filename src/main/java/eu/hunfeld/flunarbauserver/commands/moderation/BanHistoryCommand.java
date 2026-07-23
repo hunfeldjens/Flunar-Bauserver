@@ -21,7 +21,7 @@ public final class BanHistoryCommand extends BaseCommand {
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String label,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     Player player = player(sender);
     if (player != null && requireDatabase(player))
       menu.open(player, ModerationHistoryMenu.Type.BAN, 1);

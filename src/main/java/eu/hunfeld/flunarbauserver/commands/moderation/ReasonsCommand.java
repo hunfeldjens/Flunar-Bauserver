@@ -12,7 +12,7 @@ public final class ReasonsCommand extends BaseCommand {
   }
 
   public boolean onCommand(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     context.messages().send(s, "<dark_gray>--- <green>Gründe (ID → Text) <dark_gray>---");
     context.settings().banReasons().entrySet().stream()
         .sorted(Map.Entry.comparingByKey())

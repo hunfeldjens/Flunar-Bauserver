@@ -21,6 +21,7 @@ final class ProjectCreateSubcommand extends AbstractProjectSubcommand {
   }
 
   @Override
+  @SuppressWarnings("resource")
   public void execute(Player player, String[] args) {
     if (!require(player, "bauserver.srbuilder") || !database(player)) return;
     if (args.length < 5) {
@@ -105,7 +106,7 @@ final class ProjectCreateSubcommand extends AbstractProjectSubcommand {
                               .send(
                                   player,
                                   "<gray>Whitelist ist <green>aktiv<gray>. Du wurdest automatisch eingetragen.");
-                          context.messages().send(player, "<green>Gesetzte Gamerules:");
+                          context.messages().send(player, "<green>Gesetzte Spielregeln:");
                           context
                               .worlds()
                               .gameruleSummary(world)

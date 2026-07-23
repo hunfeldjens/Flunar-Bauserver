@@ -15,6 +15,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
+@SuppressWarnings("SqlNoDataSourceInspection")
 public final class ProjectRepository implements CacheRepository {
   private final DatabaseManager database;
   private final Map<String, Project> projects = new ConcurrentHashMap<>();

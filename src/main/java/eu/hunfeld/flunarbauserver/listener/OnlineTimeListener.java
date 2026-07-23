@@ -1,6 +1,7 @@
 package eu.hunfeld.flunarbauserver.listener;
 
 import eu.hunfeld.flunarbauserver.service.OnlineTimeService;
+import io.papermc.paper.event.player.AsyncChatEvent;
 import org.bukkit.event.*;
 import org.bukkit.event.block.*;
 import org.bukkit.event.player.*;
@@ -23,7 +24,7 @@ public final class OnlineTimeListener implements Listener {
   }
 
   @EventHandler
-  public void chat(AsyncPlayerChatEvent e) {
+  public void chat(AsyncChatEvent e) {
     s.activity(e.getPlayer());
   }
 

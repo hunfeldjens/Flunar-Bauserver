@@ -10,8 +10,9 @@ public final class ResetCommand extends BaseCommand {
     super(c);
   }
 
+  @SuppressWarnings("resource")
   public boolean onCommand(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     if (!requireDatabase(s)) return true;
     if (a.length == 0 || !a[0].equalsIgnoreCase("confirm")) {
       context

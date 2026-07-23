@@ -14,7 +14,7 @@ public final class SizeCommand extends BaseCommand {
   }
 
   public boolean onCommand(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     Player p = player(s);
     if (p == null) return true;
     if (a.length < 1) {
@@ -35,7 +35,7 @@ public final class SizeCommand extends BaseCommand {
 
   @Override
   public List<String> onTabComplete(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     return a.length == 1
         ? List.of("0.2", "0.4", "0.6", "0.8", "1", "1.2", "1.4", "1.6", "1.8", "2")
         : List.of();

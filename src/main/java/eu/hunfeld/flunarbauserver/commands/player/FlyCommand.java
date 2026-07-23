@@ -13,7 +13,7 @@ public final class FlyCommand extends BaseCommand {
   }
 
   public boolean onCommand(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     Player sender = player(s);
     if (sender == null) return true;
     if (a.length > 0 && !sender.hasPermission("bauserver.builder")) {
@@ -53,7 +53,7 @@ public final class FlyCommand extends BaseCommand {
 
   @Override
   public java.util.List<String> onTabComplete(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     return a.length == 1
         ? Bukkit.getOnlinePlayers().stream().map(Player::getName).toList()
         : java.util.List.of();

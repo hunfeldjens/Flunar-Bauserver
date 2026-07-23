@@ -17,7 +17,7 @@ public final class BanCommand extends BaseCommand {
   }
 
   public boolean onCommand(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     Player by = player(s);
     if (by == null || !requireDatabase(by)) return true;
     if (a.length < 2) {
@@ -48,7 +48,8 @@ public final class BanCommand extends BaseCommand {
       context.messages().send(by, "<red>Ungültige Grund-ID. Nutze /reasons.");
       return true;
     }
-    if (t.isOnline() && t.getPlayer().hasPermission("bauserver.ban.bypass")) {
+    Player onlineTarget = t.getPlayer();
+    if (onlineTarget != null && onlineTarget.hasPermission("bauserver.ban.bypass")) {
       context.messages().send(by, "<red>Dieser Spieler besitzt einen Bypass.");
       return true;
     }
@@ -62,7 +63,7 @@ public final class BanCommand extends BaseCommand {
             by.getName(),
             full)
         .whenComplete(
-            (ok, e) ->
+            (ok, _) ->
                 Bukkit.getScheduler()
                     .runTask(
                         context.plugin(),
@@ -100,8 +101,8 @@ public final class BanCommand extends BaseCommand {
                                         .send(player, "<gray>Von: <green>" + by.getName());
                                     context.messages().raw(player, "");
                                   });
-                          if (t.isOnline()) {
-                            Player target = t.getPlayer();
+                          Player target = Bukkit.getPlayer(t.getUniqueId());
+                          if (target != null) {
                             target.getWorld().strikeLightningEffect(target.getLocation());
                             target.kick(
                                 context
@@ -126,7 +127,7 @@ public final class BanCommand extends BaseCommand {
   }
 
   public List<String> onTabComplete(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     if (a.length == 1) return Bukkit.getOnlinePlayers().stream().map(Player::getName).toList();
     if (a.length == 2)
       return context.settings().banReasons().keySet().stream().map(String::valueOf).toList();

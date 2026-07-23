@@ -16,6 +16,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
+@SuppressWarnings("SqlNoDataSourceInspection")
 public final class OnlineTimeRepository implements CacheRepository {
   private final DatabaseManager database;
   private final Map<UUID, OnlineTimeRecord> times = new ConcurrentHashMap<>();
@@ -70,8 +71,8 @@ public final class OnlineTimeRepository implements CacheRepository {
     return ranking();
   }
 
-  public CompletableFuture<Boolean> recordJoin(UUID uuid, String name, String ipAddress) {
-    return database.submit(
+  public void recordJoin(UUID uuid, String name, String ipAddress) {
+    database.submit(
         connection -> {
           try (PreparedStatement player =
                   connection.prepareStatement(
@@ -88,7 +89,7 @@ public final class OnlineTimeRepository implements CacheRepository {
           }
           times.compute(
               uuid,
-              (key, old) ->
+              (_, old) ->
                   new OnlineTimeRecord(
                       uuid,
                       name,
@@ -123,7 +124,7 @@ public final class OnlineTimeRepository implements CacheRepository {
                 old.afkSeconds() + added.afkSeconds()));
     times.compute(
         uuid,
-        (key, old) ->
+        (_, old) ->
             new OnlineTimeRecord(
                 uuid,
                 name,
@@ -141,8 +142,8 @@ public final class OnlineTimeRepository implements CacheRepository {
     pending = new LinkedHashMap<>();
     flushChain =
         flushChain
-            .handle((ignored, error) -> true)
-            .thenCompose(ignored -> writeBatch(snapshot))
+            .handle((_, _) -> true)
+            .thenCompose(_ -> writeBatch(snapshot))
             .thenApply(
                 success -> {
                   if (!success) restore(snapshot);
@@ -199,7 +200,7 @@ public final class OnlineTimeRepository implements CacheRepository {
                     }
                     times.computeIfPresent(
                         uuid,
-                        (key, old) ->
+                        (_, old) ->
                             new OnlineTimeRecord(
                                 uuid, old.name(), 0, 0, 0, old.firstSeen(), old.lastSeen()));
                     return true;

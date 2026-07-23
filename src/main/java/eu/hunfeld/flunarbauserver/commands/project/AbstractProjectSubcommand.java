@@ -22,6 +22,7 @@ abstract class AbstractProjectSubcommand implements ProjectSubcommand {
     return false;
   }
 
+  @SuppressWarnings("resource")
   protected boolean database(Player player) {
     if (context.database().isReady()) return true;
     context.messages().send(player, "<red>Die Datenbank ist momentan nicht verfügbar.");

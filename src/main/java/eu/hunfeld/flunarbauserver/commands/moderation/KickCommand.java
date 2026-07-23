@@ -15,7 +15,7 @@ public final class KickCommand extends BaseCommand {
   }
 
   public boolean onCommand(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     Player by = player(s);
     if (by == null || !requireDatabase(by)) return true;
     if (a.length < 2) {
@@ -48,7 +48,7 @@ public final class KickCommand extends BaseCommand {
         .moderation()
         .recordKick(t.getUniqueId(), t.getName(), by.getUniqueId(), by.getName(), full)
         .whenComplete(
-            (ok, e) ->
+            (ok, _) ->
                 Bukkit.getScheduler()
                     .runTask(
                         context.plugin(),
@@ -98,7 +98,7 @@ public final class KickCommand extends BaseCommand {
   }
 
   public List<String> onTabComplete(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     if (a.length == 1) return Bukkit.getOnlinePlayers().stream().map(Player::getName).toList();
     if (a.length == 2)
       return context.settings().banReasons().keySet().stream().map(String::valueOf).toList();

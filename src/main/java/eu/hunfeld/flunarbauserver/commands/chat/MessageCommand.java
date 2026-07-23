@@ -26,7 +26,7 @@ public final class MessageCommand extends BaseCommand {
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String label,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     if (args.length < 2) {
       context.messages().send(sender, "<gray>Benutzung: <green>/msg <Spieler> <Nachricht>");
       return true;
@@ -69,7 +69,7 @@ public final class MessageCommand extends BaseCommand {
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String alias,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     if (args.length != 1) return List.of();
     String search = args[0].toLowerCase(java.util.Locale.ROOT);
     return Bukkit.getOnlinePlayers().stream()

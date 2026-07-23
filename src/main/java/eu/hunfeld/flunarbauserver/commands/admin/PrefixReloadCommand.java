@@ -14,7 +14,7 @@ public final class PrefixReloadCommand extends BaseCommand {
   }
 
   public boolean onCommand(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     if (a.length == 1 && a[0].equalsIgnoreCase("reload")) {
       reload.run();
       context.messages().send(s, "<green>Prefixe und Tablist wurden aktualisiert.");

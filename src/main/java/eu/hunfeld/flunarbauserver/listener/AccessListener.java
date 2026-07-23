@@ -17,6 +17,7 @@ import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
+@SuppressWarnings({"deprecation", "resource"})
 public final class AccessListener implements Listener {
   private final BauserverContext context;
 
@@ -98,8 +99,7 @@ public final class AccessListener implements Listener {
 
   @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
   public void teleport(PlayerTeleportEvent event) {
-    if (event.getTo() == null
-        || event.getTo().getWorld() == null
+    if (event.getTo().getWorld() == null
         || event.getTo().getWorld() == event.getFrom().getWorld()) return;
     String world = event.getTo().getWorld().getName();
     if (context.backups().safeWorldLocked(world)) {
@@ -151,12 +151,15 @@ public final class AccessListener implements Listener {
     return context
         .messages()
         .parse(
-            "<aqua><bold>Flunar.de</bold> <dark_gray>» <white>Bauserver\n\n"
-                + "<gray>Hoppla! Du bist leider noch kein <yellow>Teammitglied<gray>.\n"
-                + "<white>Damit wir unsere Projekte schützen können, ist der\n"
-                + "<white>Direktzugriff nur für autorisierte Teammitglieder erlaubt.\n\n"
-                + "<aqua>Lust mitzubauen?\n"
-                + "<gray>Wir suchen immer talentierte Unterstützung!\n"
-                + "<white>Bewirb dich jetzt unter: <blue>dc.flunar.de");
+            """
+            <aqua><bold>Flunar.de</bold> <dark_gray>» <white>Bauserver
+
+            <gray>Hoppla! Du bist leider noch kein <yellow>Teammitglied<gray>.
+            <white>Damit wir unsere Projekte schützen können, ist der
+            <white>Direktzugriff nur für autorisierte Teammitglieder erlaubt.
+
+            <aqua>Lust mitzubauen?
+            <gray>Wir suchen immer talentierte Unterstützung!
+            <white>Bewirb dich jetzt unter: <blue>dc.flunar.de""");
   }
 }

@@ -45,10 +45,12 @@ public final class ServerListIconService implements Listener {
       return;
     }
     HttpRequest request = HttpRequest.newBuilder(uri).timeout(Duration.ofSeconds(5)).GET().build();
-    HttpClient.newBuilder()
-        .followRedirects(HttpClient.Redirect.NORMAL)
-        .connectTimeout(Duration.ofSeconds(5))
-        .build()
+    HttpClient client =
+        HttpClient.newBuilder()
+            .followRedirects(HttpClient.Redirect.NORMAL)
+            .connectTimeout(Duration.ofSeconds(5))
+            .build();
+    client
         .sendAsync(request, HttpResponse.BodyHandlers.ofByteArray())
         .thenApply(
             response -> {
@@ -81,7 +83,8 @@ public final class ServerListIconService implements Listener {
                                 .warning(
                                     "Serverlisten-Icon ist ungültig: " + exception.getMessage());
                           }
-                        }));
+                        }))
+        .whenComplete((_, _) -> client.close());
   }
 
   private static BufferedImage decode(byte[] bytes) {

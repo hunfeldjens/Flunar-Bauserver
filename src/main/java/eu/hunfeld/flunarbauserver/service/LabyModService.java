@@ -16,6 +16,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 
+@SuppressWarnings("SpellCheckingInspection")
 public final class LabyModService implements Listener {
   private final FlunarBauserver plugin;
   private final LabyModSettings settings;
@@ -46,7 +47,7 @@ public final class LabyModService implements Listener {
   public void onWorldChange(PlayerChangedWorldEvent event) {
     LabyModProtocolService protocol = LabyModProtocolService.get();
     if (!protocol.isUsingLabyMod(event.getPlayer().getUniqueId())) return;
-    LabyModPlayer player = (LabyModPlayer) protocol.getPlayer(event.getPlayer().getUniqueId());
+    LabyModPlayer player = protocol.getPlayer(event.getPlayer().getUniqueId());
     if (player != null) apply(player);
   }
 

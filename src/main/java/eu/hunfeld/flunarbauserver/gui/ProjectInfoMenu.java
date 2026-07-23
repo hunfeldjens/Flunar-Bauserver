@@ -18,7 +18,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -69,7 +68,7 @@ public final class ProjectInfoMenu extends AbstractMenu implements Listener {
 
   private void openDetail(Player player, String filter, ProjectInfo info) {
     DetailHolder holder = new DetailHolder(filter, info);
-    Inventory inventory = filled(holder, 27, "<dark_green>Info: " + info.name());
+    Inventory inventory = filled(holder, "<dark_green>Info: " + info.name());
     inventory.setItem(4, infoItem(info, false, player));
     if (hasPosition(info)) {
       inventory.setItem(
@@ -112,7 +111,7 @@ public final class ProjectInfoMenu extends AbstractMenu implements Listener {
 
   private void openDelete(Player player, String filter, ProjectInfo info) {
     DeleteHolder holder = new DeleteHolder(filter, info);
-    Inventory inventory = filled(holder, 27, "<red>Info löschen?");
+    Inventory inventory = filled(holder, "<red>Info löschen?");
     inventory.setItem(
         13,
         named(
@@ -153,7 +152,7 @@ public final class ProjectInfoMenu extends AbstractMenu implements Listener {
         player.closeInventory();
         return;
       }
-      if (slot >= 0 && slot < Math.min(45, overview.infos.size())) {
+      if (slot < Math.min(45, overview.infos.size())) {
         UiSound.CLICK.play(player);
         openDetail(player, overview.filter, overview.infos.get(slot));
       }
@@ -218,6 +217,7 @@ public final class ProjectInfoMenu extends AbstractMenu implements Listener {
     }
   }
 
+  @SuppressWarnings("resource")
   private void teleport(Player player, ProjectInfo info) {
     if (context.backups().safeWorldLocked(info.worldName())) {
       context
@@ -291,7 +291,7 @@ public final class ProjectInfoMenu extends AbstractMenu implements Listener {
   }
 
   private ItemStack infoItem(ProjectInfo info, boolean showDistance, Player player) {
-    List<String> lore = new ArrayList<>(wrap(info.description(), "<gray>"));
+    List<String> lore = new ArrayList<>(wrap(info.description()));
     lore.add("");
     lore.add("<dark_gray>Projekt: <yellow>" + info.worldName());
     lore.add("<dark_gray>Info-ID: <white>#" + info.id());
@@ -317,11 +317,11 @@ public final class ProjectInfoMenu extends AbstractMenu implements Listener {
     return named(Material.OAK_SIGN, "<green><bold>" + info.name(), lore);
   }
 
-  private Inventory filled(InventoryHolder holder, int size, String title) {
-    Inventory inventory = Bukkit.createInventory(holder, size, context.messages().parse(title));
+  private Inventory filled(InventoryHolder holder, String title) {
+    Inventory inventory = Bukkit.createInventory(holder, 27, context.messages().parse(title));
     if (holder instanceof DetailHolder detail) detail.inventory = inventory;
     if (holder instanceof DeleteHolder delete) delete.inventory = inventory;
-    for (int slot = 0; slot < size; slot++) inventory.setItem(slot, DECORATION_ITEM);
+    for (int slot = 0; slot < inventory.getSize(); slot++) inventory.setItem(slot, DECORATION_ITEM);
     return inventory;
   }
 
@@ -330,17 +330,17 @@ public final class ProjectInfoMenu extends AbstractMenu implements Listener {
     UiSound.OPEN.play(player);
   }
 
-  private static List<String> wrap(String value, String color) {
-    if (value == null || value.isBlank()) return List.of(color);
+  private static List<String> wrap(String value) {
+    if (value == null || value.isBlank()) return List.of("<gray>");
     String[] words = value.trim().split("\\s+");
     List<String> lines = new ArrayList<>();
-    StringBuilder line = new StringBuilder(color);
+    StringBuilder line = new StringBuilder("<gray>");
     for (int index = 0; index < words.length; index++) {
       if (index > 0 && index % 6 == 0) {
         lines.add(line.toString());
-        line = new StringBuilder(color);
+        line = new StringBuilder("<gray>");
       }
-      if (line.length() > color.length()) line.append(' ');
+      if (line.length() > 6) line.append(' ');
       line.append(words[index]);
     }
     lines.add(line.toString());

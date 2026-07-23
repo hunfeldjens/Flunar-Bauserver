@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import org.mariadb.jdbc.Driver;
 
 
+@SuppressWarnings("SpellCheckingInspection")
 public final class DatabaseManager implements AutoCloseable {
   private final FlunarBauserver plugin;
   private final DatabaseSettings settings;
@@ -53,22 +54,7 @@ public final class DatabaseManager implements AutoCloseable {
     return CompletableFuture.supplyAsync(
         () -> {
           try {
-            HikariConfig config = new HikariConfig();
-            config.setPoolName("Flunar-Bauserver");
-            config.setDriverClassName(Driver.class.getName());
-            config.setJdbcUrl(settings.jdbcUrl());
-            config.setUsername(settings.username());
-            config.setPassword(settings.password());
-            config.setMaximumPoolSize(settings.poolSize());
-            config.setMinimumIdle(1);
-            config.setConnectionTimeout(settings.connectionTimeoutMs());
-            config.setValidationTimeout(2_000L);
-            config.setInitializationFailTimeout(settings.connectionTimeoutMs());
-            config.addDataSourceProperty(
-                "connectTimeout", Math.toIntExact(settings.connectionTimeoutMs()));
-            config.addDataSourceProperty("socketTimeout", 30_000);
-            config.addDataSourceProperty("rewriteBatchedStatements", true);
-            dataSource = new HikariDataSource(config);
+            dataSource = new HikariDataSource(createConfig());
             try (Connection connection = connection()) {
               plugin.getLogger().info("MariaDB-Verbindung hergestellt; Schema wird geprüft.");
               SchemaInitializer.create(connection);
@@ -135,6 +121,25 @@ public final class DatabaseManager implements AutoCloseable {
 
   private long elapsedMillis(long started) {
     return TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - started);
+  }
+
+  private HikariConfig createConfig() {
+    HikariConfig config = new HikariConfig();
+    config.setPoolName("Flunar-Bauserver");
+    config.setDriverClassName(Driver.class.getName());
+    config.setJdbcUrl(settings.jdbcUrl());
+    config.setUsername(settings.username());
+    config.setPassword(settings.password());
+    config.setMaximumPoolSize(settings.poolSize());
+    config.setMinimumIdle(1);
+    config.setConnectionTimeout(settings.connectionTimeoutMs());
+    config.setValidationTimeout(2_000L);
+    config.setInitializationFailTimeout(settings.connectionTimeoutMs());
+    config.addDataSourceProperty(
+        "connectTimeout", Math.toIntExact(settings.connectionTimeoutMs()));
+    config.addDataSourceProperty("socketTimeout", 30_000);
+    config.addDataSourceProperty("rewriteBatchedStatements", true);
+    return config;
   }
 
   private Connection connection() throws SQLException {

@@ -44,7 +44,7 @@ public final class ProjectCommand extends BaseCommand {
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String label,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     Player player = player(sender);
     if (player == null) return true;
     if (args.length == 0) overview.execute(player, args);
@@ -57,7 +57,7 @@ public final class ProjectCommand extends BaseCommand {
       @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String alias,
-      @NotNull String[] args) {
+      @NotNull String @NotNull [] args) {
     if (!(sender instanceof Player player)) return List.of();
     if (args.length == 1) {
       List<String> available = new ArrayList<>();

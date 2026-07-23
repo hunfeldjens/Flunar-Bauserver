@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
+@SuppressWarnings("SqlNoDataSourceInspection")
 public final class AutoloadRepository implements CacheRepository {
   private final DatabaseManager database;
   private final Set<String> worlds = ConcurrentHashMap.newKeySet();

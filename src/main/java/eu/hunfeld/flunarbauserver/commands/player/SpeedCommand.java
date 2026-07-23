@@ -13,7 +13,7 @@ public final class SpeedCommand extends BaseCommand {
   }
 
   public boolean onCommand(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     Player p = player(s);
     if (p == null) return true;
     if (a.length < 1) {
@@ -44,7 +44,7 @@ public final class SpeedCommand extends BaseCommand {
 
   @Override
   public List<String> onTabComplete(
-      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String[] a) {
+      @NotNull CommandSender s, @NotNull Command c, @NotNull String l, @NotNull String @NotNull [] a) {
     return a.length == 1
         ? List.of("off", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
         : List.of();
